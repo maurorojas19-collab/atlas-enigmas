@@ -47,3 +47,9 @@ La versión estable del mapa, zoom táctil, ciclo día/noche y marcadores agrupa
 - Se explica **cómo se obtiene la evidencia**: trazos preparatorios, pigmentos, planos, estudios de fragmentos, arqueología de conservación y escaneo no invasivo.
 - Se evitan repeticiones y alusiones sensacionalistas innecesarias. La emoción nace de preguntas históricas reales.
 - Antes de cada publicación se verifica el artículo íntegro, los enlaces, la galería, las licencias, el estado móvil y el despliegue. No alterar el motor estable del globo.
+
+## Expediente 002 · Guiza (28-10-2026)
+- Crónica de 2.341 palabras, 24 párrafos continuos, 10 referencias y plano esquemático explícitamente didáctico.
+- Fotografías de archivo de Wikimedia Commons, con créditos y enlace de licencia; las cuatro fotografías personales aportadas por el usuario siguen pendientes de incorporación pública y **no deben representarse como publicadas**.
+- La exposición de Guiza abre el artículo completo sin duplicaciones, seguida de la galería interactiva con guía para observar cada imagen.
+- La hipótesis sobre rampas, los descubrimientos de ScanPyramids y la atribución de estructuras se describen con incertidumbre científica explícita.
