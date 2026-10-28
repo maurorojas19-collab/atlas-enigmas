@@ -3,9 +3,10 @@
 Museo digital de exploración histórica, arqueología, ciencia y lugares extraordinarios. **TELLUS** es el nombre público del proyecto; **EL ATLAS**, su experiencia de exploración. Lema: **La Tierra guarda historias.**
 
 ## Sitio publicado
-https://tellus-uolq.onrender.com
+https://tellus-atlas.onrender.com
 
-- **Dirección preferida:** `https://tellus.onrender.com`, no asignada por Render. Al crear el nuevo servicio `tellus`, Render entregó el subdominio `tellus-uolq.onrender.com`.
+- **Dirección oficial:** `https://tellus-atlas.onrender.com` (servicio de Render `tellus-atlas`).
+- **Servicio anterior:** `https://tellus-uolq.onrender.com` (provisional, aún conservado).
 - **Respaldo:** https://atlas-enigmas.onrender.com (servicio conservado como `atlas-enigmas-respaldo`).
 
 - **Repositorio:** maurorojas19-collab/atlas-enigmas
@@ -33,7 +34,7 @@ La versión 0.2 está desplegada como **index.html autocontenido** para simplifi
 - Añadir progresivamente lugares y artículos con rigor histórico, fotografías con licencia comprobada y referencias trazables.
 - Revisar cada artículo antes de presentarlo como investigación exhaustiva.
 - Implementar exportación de recuerdos y, opcionalmente, una cuenta privada.
-- Mantener los enlaces del nuevo sitio TELLUS y conservar el servicio anterior como respaldo hasta decidir si se desea otra URL gratuita de Render.
+- Mantener los enlaces de `tellus-atlas.onrender.com` y conservar los servicios anteriores como respaldo hasta decidir si se desea otra URL gratuita de Render.
 - Revisar rendimiento de globo y vista móvil en dispositivos reales.
 
 La experiencia inmersiva está en `inmersion.html` y el primer reportaje independiente en `seti-i.html`. Los cambios en `main` se despliegan automáticamente según la configuración actual documentada.
