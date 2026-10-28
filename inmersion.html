@@ -127,6 +127,34 @@
 @media(max-width:360px){.top .logodetail{display:none!important}.top-tools .round-control{width:32px;min-width:32px}.hero-quick-actions button{font-size:10px;padding:0 9px}.hero-copy{right:76px}}
 @media(prefers-reduced-motion:reduce){.archive-drawer{transition:none}}
 
+
+/* ATLAS 0.9: agrupaciones de monumentos próximos sin exigir zoom extremo. */
+.atlas-pin.nearby-cluster,.map-place.nearby-cluster,#atlas-detail-surface .detail-pin.nearby-cluster{
+  display:flex;align-items:center;justify-content:center;color:#182632!important;font:700 13px/1 system-ui,sans-serif!important;
+  width:31px;height:31px;min-width:31px;min-height:31px;border:2px solid #fff1d2;
+  background:#e2bb7b;border-radius:50%;box-shadow:0 0 0 5px #c69b5f50,0 6px 24px #0009;
+  z-index:8;touch-action:manipulation;cursor:pointer;
+}
+#atlas-detail-surface .detail-pin.nearby-cluster{width:38px;height:38px;min-width:38px;min-height:38px;font-size:14px!important}
+.map-place.nearby-cluster{width:32px;height:32px;min-width:32px;min-height:32px}
+.nearby-chooser{position:absolute;z-index:36;right:clamp(14px,3.5vw,60px);bottom:clamp(90px,12vh,148px);width:min(350px,calc(100vw - 28px));color:#f5efdf;
+ border:1px solid #d4b47d88;background:#0b1721f5;box-shadow:0 28px 90px #000b;backdrop-filter:blur(22px);border-radius:14px;padding:19px;display:none}
+.nearby-chooser.open{display:block;animation:nearby-appear .18s ease-out}
+.nearby-chooser .nearby-top{display:flex;align-items:start;justify-content:space-between;gap:12px;margin-bottom:13px}
+.nearby-chooser .nearby-kicker{font:600 10px/1.4 system-ui,sans-serif;letter-spacing:.18em;color:#d7b983;text-transform:uppercase}
+.nearby-chooser h2{font:normal 24px/1.22 Georgia,serif;margin:5px 0 0;color:#faf2e2}
+.nearby-chooser .nearby-close{border:1px solid #ffffff3b;border-radius:50%;width:34px;height:34px;min-width:34px;background:#fff1;color:#fff;font-size:23px;line-height:1;cursor:pointer}
+.nearby-chooser .nearby-option{display:flex;text-align:left;align-items:center;width:100%;gap:12px;padding:13px 4px;border:0;border-top:1px solid #ffffff24;background:none;color:#f7f1e7;cursor:pointer}
+.nearby-chooser .nearby-option:hover,.nearby-chooser .nearby-option:focus-visible{background:#dabb8740;outline:2px solid #d9b678;outline-offset:-2px}
+.nearby-chooser .nearby-symbol{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid #e4c78f;color:#dfc28b;flex:none;font-size:17px}
+.nearby-chooser .nearby-copy{display:flex;flex-direction:column;gap:3px;flex:1;min-width:0}
+.nearby-chooser .nearby-copy strong{font:600 14px/1.3 system-ui,sans-serif}
+.nearby-chooser .nearby-copy small{color:#b8c3c8;font:400 11px/1.35 system-ui,sans-serif}
+.nearby-chooser .nearby-arrow{color:#d9bd8b}
+@keyframes nearby-appear{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:700px){.nearby-chooser{position:fixed;left:12px;right:12px;bottom:max(16px,env(safe-area-inset-bottom));width:auto;max-height:60dvh;overflow-y:auto;z-index:80;padding:16px}}
+@media(prefers-reduced-motion:reduce){.nearby-chooser{animation:none}}
+
 </style></head><body>
 <main id="map-shell" aria-label="Atlas interactivo del mundo">
 <div class="star-layer" aria-hidden="true"></div><div id="planet-map" aria-label="Globo cartográfico interactivo"></div>
@@ -138,6 +166,10 @@
 <div class="map-error" id="map-error" hidden></div><div id="map-mode-note">GIRA EL PLANETA · TOCA UN DESTINO</div>
 <div class="map-note" id="map-note">GLOBO · DÍA/NOCHE EN TIEMPO REAL · BUSCA Y EXPLORA LOS LUGARES</div>
 <aside class="preview" id="preview" aria-live="polite"><button class="preview-close" id="preview-close" aria-label="Cerrar ficha">×</button><div class="preview-photo"><img id="preview-image" alt="Fotografía del lugar"></div><div class="preview-body"><span class="eyebrow" id="preview-index">EXPOSICIÓN 01 / 15</span><h2 id="preview-title">Un lugar</h2><p id="preview-lead"></p><div class="preview-meta"><span id="preview-region"></span><span id="preview-visited" class="memory-indicator"></span></div><div class="preview-personal-actions"><button type="button" id="save-place" aria-pressed="false" class="favorite-chip">♡ Guardar favorito</button><button type="button" id="mark-visited" aria-pressed="false" class="visited-chip">✓ Marcar visitado</button></div><div class="preview-actions"><button class="ui-button" id="go-exhibit">ENTRAR AL LUGAR ↗</button><button class="ui-button secondary" id="fly-detail">ACERCAR</button></div><p class="photo-credit">Fotografías de archivo: fuentes y licencias dentro de cada exposición.</p></div></aside>
+<aside id="nearby-chooser" class="nearby-chooser" role="dialog" aria-modal="false" aria-labelledby="nearby-heading" aria-hidden="true">
+  <div class="nearby-top"><div><span class="nearby-kicker">LUGARES CERCANOS</span><h2 id="nearby-heading">Elige un destino</h2></div><button type="button" id="nearby-close" class="nearby-close" aria-label="Cerrar lugares cercanos">×</button></div>
+  <div id="nearby-options" aria-label="Opciones de lugares cercanos"></div>
+</aside>
 <div id="archive-shade" class="archive-shade" hidden></div>
 <aside id="archive-drawer" class="archive-drawer" role="dialog" aria-modal="true" aria-labelledby="archive-title" aria-hidden="true" tabindex="-1"><header class="archive-top"><div><span class="eyebrow">CUADERNO DEL EXPLORADOR</span><h2 id="archive-title">Mi archivo</h2></div><button type="button" id="close-archive" class="archive-close" aria-label="Cerrar mi archivo">×</button></header><p class="archive-desc">Un lugar para volver a los sitios que te intrigan y recordar los que ya recorriste.</p><div class="archive-stats"><div><strong id="archive-fav-count">0</strong><span>favoritos</span></div><div><strong id="archive-visited-count">0</strong><span>visitados</span></div><div><strong>15</strong><span>destinos</span></div></div><div class="archive-tabs" role="tablist" aria-label="Filtrar mi archivo"><button type="button" class="active" data-archive-tab="favoritos" role="tab" aria-selected="true">Favoritos</button><button type="button" data-archive-tab="visitados" role="tab" aria-selected="false">Visitados</button><button type="button" data-archive-tab="todos" role="tab" aria-selected="false">Todos</button></div><div id="archive-list" class="archive-list" aria-live="polite"></div><p class="archive-foot">Tus favoritos y lugares visitados se guardan en este navegador. Por ahora no se sincronizan con otros dispositivos.</p></aside>
 </main>
@@ -157,9 +189,9 @@ const photo=(file,alt,cl='')=>`<img class="${cl}" alt="${escapeHtml(alt)}" loadi
 const solar=()=>{const n=new Date(),utc=n.getUTCHours()+n.getUTCMinutes()/60+ n.getUTCSeconds()/3600,year=n.getUTCFullYear();let d=(Date.UTC(year,n.getUTCMonth(),n.getUTCDate())-Date.UTC(year,0,0))/86400000;return {decl:23.44*Math.sin(2*Math.PI*(d-81)/365.2422)*Math.PI/180,lon:(12-utc)*15}};
 function nightData(){let o=[],sun=solar();for(let lat=-85;lat<85;lat+=5){for(let lon=-180;lon<180;lon+=5){const a=(lat+2.5)*Math.PI/180,b=(lon+2.5-sun.lon)*Math.PI/180;const v=Math.sin(a)*Math.sin(sun.decl)+Math.cos(a)*Math.cos(sun.decl)*Math.cos(b);const shade=Math.min(.75,Math.max(0,(-v+.06)*2));if(shade>.02)o.push({type:'Feature',geometry:{type:'Polygon',coordinates:[[[lon,lat],[lon+5,lat],[lon+5,lat+5],[lon,lat+5],[lon,lat]]]},properties:{shade}})}}return {type:'FeatureCollection',features:o}}
 function tileStyle(mode){if(mode==='mapa')return 'https://tiles.openfreemap.org/styles/fiord';return {version:8,sources:{sat:{type:'raster',tiles:['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg'],minzoom:0,maxzoom:14,tileSize:256,attribution:'Sentinel-2 cloudless © EOX IT Services GmbH'}},layers:[{id:'space',type:'background',paint:{'background-color':'#071019'}},{id:'satellite',type:'raster',source:'sat',paint:{'raster-fade-duration':400}}]}}
-function initMap(){if(map || !window.maplibregl || !maplibregl.supported()){return}try{map=new maplibregl.Map({container:'planet-map',style:tileStyle('satelite'),center:[25,16],zoom:1.45,projection:'globe',minZoom:0.5,maxZoom:16,pitch:0,attributionControl:true,renderWorldCopies:false,dragRotate:false,touchPitch:false,touchZoomRotate:true,dragPan:true,cooperativeGestures:false});map.touchZoomRotate.enable();map.dragPan.enable();map.on('style.load',()=>{map.setProjection({type:'globe'});if(typeof map.setSky==='function')map.setSky({'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,5,1,7,0]});if(!map.getSource('night'))map.addSource('night',{type:'geojson',data:nightData()});if(!map.getLayer('night'))map.addLayer({id:'night',type:'fill',source:'night',paint:{'fill-color':'#020912','fill-opacity':['*',['get','shade'],['interpolate',['linear'],['zoom'],0,1,5,.8,9,0]]}});mapReady=true});map.on('sourcedata',e=>{if(e.sourceId==='sat' && e.isSourceLoaded && map.getZoom()>=0){if(window.atlasDetail)atlasDetail.exit(true);$('#atlas-globe-stage').classList.add('hidden');$('#map-mode-note').textContent='SATÉLITE · DESLIZA Y HAZ PINZA PARA ACERCAR';}});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.stopPropagation();selectPlace(p,true)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)});nightTimer=setInterval(()=>{if(map&&map.getSource('night'))map.getSource('night').setData(nightData())},180000)}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
+function initMap(){if(map || !window.maplibregl || !maplibregl.supported()){return}try{map=new maplibregl.Map({container:'planet-map',style:tileStyle('satelite'),center:[25,16],zoom:1.45,projection:'globe',minZoom:0.5,maxZoom:16,pitch:0,attributionControl:true,renderWorldCopies:false,dragRotate:false,touchPitch:false,touchZoomRotate:true,dragPan:true,cooperativeGestures:false});map.touchZoomRotate.enable();map.dragPan.enable();map.on('style.load',()=>{map.setProjection({type:'globe'});if(typeof map.setSky==='function')map.setSky({'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,5,1,7,0]});if(!map.getSource('night'))map.addSource('night',{type:'geojson',data:nightData()});if(!map.getLayer('night'))map.addLayer({id:'night',type:'fill',source:'night',paint:{'fill-color':'#020912','fill-opacity':['*',['get','shade'],['interpolate',['linear'],['zoom'],0,1,5,.8,9,0]]}});mapReady=true});map.on('sourcedata',e=>{if(e.sourceId==='sat' && e.isSourceLoaded && map.getZoom()>=0){if(window.atlasDetail)atlasDetail.exit(true);$('#atlas-globe-stage').classList.add('hidden');$('#map-mode-note').textContent='SATÉLITE · DESLIZA Y HAZ PINZA PARA ACERCAR';}});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.stopPropagation();const group=mapPinGroups.get(p.id);if(group?.length>1)openNearbyChooser(group);else selectPlace(p,true)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;scheduleMapPinGroups();map.on('move',scheduleMapPinGroups);map.on('zoomend',scheduleMapPinGroups);});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)});nightTimer=setInterval(()=>{if(map&&map.getSource('night'))map.getSource('night').setData(nightData())},180000)}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
 function flyTo(p,zoom=4){if(map && $('#atlas-globe-stage').classList.contains('hidden'))map.flyTo({center:[p.lon,p.lat],zoom,speed:0.75,curve:1.4,essential:true});else if(window.atlasDetail?.active())atlasDetail.enter(p,zoom);else if(window.atlasFallback)atlasFallback.focus(p)}
-function selectPlace(p,fly=true){selected=p;markers.forEach(m=>m.el.classList.toggle('active',m.p.id===p.id));$('#preview').classList.add('open');$('#hero-copy').style.opacity='0';$('#preview-index').textContent='EXPOSICIÓN '+p.vol+' / 15';$('#preview-title').textContent=p.name;$('#preview-lead').textContent=p.subtitle+'. '+p.lead;$('#preview-region').textContent=p.country+' · '+p.location;$('#preview-visited').textContent=p.visited?'● YA VISITASTE ESTE LUGAR':'';let im=$('#preview-image');im.src=photoUrl(p.image,1100);im.alt='Vista de '+p.name;im.onerror=()=>{im.alt='Fotografía de archivo no disponible';im.style.display='none'};im.onload=()=>im.style.display='block';if(fly)flyTo(p,4.6);if(window.atlasFallback && !$('#atlas-globe-stage').classList.contains('hidden'))atlasFallback.mark();updatePersonalControls()}
+function selectPlace(p,fly=true){closeNearbyChooser();selected=p;markers.forEach(m=>m.el.classList.toggle('active',m.p.id===p.id));$('#preview').classList.add('open');$('#hero-copy').style.opacity='0';$('#preview-index').textContent='EXPOSICIÓN '+p.vol+' / 15';$('#preview-title').textContent=p.name;$('#preview-lead').textContent=p.subtitle+'. '+p.lead;$('#preview-region').textContent=p.country+' · '+p.location;$('#preview-visited').textContent=p.visited?'● YA VISITASTE ESTE LUGAR':'';let im=$('#preview-image');im.src=photoUrl(p.image,1100);im.alt='Vista de '+p.name;im.onerror=()=>{im.alt='Fotografía de archivo no disponible';im.style.display='none'};im.onload=()=>im.style.display='block';if(fly)flyTo(p,4.6);scheduleMapPinGroups();if(window.atlasFallback && !$('#atlas-globe-stage').classList.contains('hidden'))atlasFallback.mark();updatePersonalControls()}
 function resetPreview(){$('#preview').classList.remove('open');$('#hero-copy').style.opacity='1';markers.forEach(m=>m.el.classList.remove('active'))}
 function results(q=''){const z=q.toLocaleLowerCase('es').trim();$('#search-results').innerHTML=places.filter(p=>(p.name+' '+p.country+' '+p.location).toLocaleLowerCase('es').includes(z)).map(p=>`<button type="button" data-id="${p.id}"><span>${escapeHtml(p.name)}<br><small>${escapeHtml(p.location)} · ${escapeHtml(p.country)}</small></span><span>↗</span></button>`).join('')||'<p>No encontramos ese lugar en esta colección.</p>';$('#search-results').querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{const p=places.find(x=>x.id===b.dataset.id);$('#search').close();selectPlace(p,true)}))}
 function openExhibit(p){if(!p)return;activeExhibit=p;photoIndex=0;updatePersonalControls();let chapters=p.sections;let imgs=p.gallery.length?p.gallery:[[p.image,'Fotografía documental']];let head=photo(p.image,p.name);let prose=editorialStories[p.id] || (editorialOpeners[p.id] ? [editorialOpeners[p.id],...(editorialExtras[p.id]||[]),...p.sections.map(x=>x[1]).filter(x=>!x.startsWith('Esta exposición introductoria')&&!x.startsWith('La historia del sitio'))] : p.sections.map(x=>x[1]));
@@ -171,6 +203,68 @@ const memoGet=async k=>{let db=await memoryDb();return new Promise((res,rej)=>{c
 const memoPut=async(k,v)=>{let db=await memoryDb();return new Promise((res,rej)=>{const tx=db.transaction('visits','readwrite');tx.objectStore('visits').put(v,k);tx.oncomplete=()=>res();tx.onerror=()=>rej(tx.error)})};
 async function initMemory(p){try{const m=await memoGet(p.id);$('#visit-note').value=m.note||'';if(m.photo){$('#visit-photo-preview').src=URL.createObjectURL(m.photo);$('#visit-photo-preview').hidden=false}}catch(err){console.warn(err);$('#memory-status').textContent='No se pudo acceder al almacenamiento local'}$('#save-memory').addEventListener('click',async()=>{const file=$('#visit-photo').files[0];if(file&&file.size>6*1024*1024){$('#memory-status').textContent='La imagen supera 6 MB. Elige una versión comprimida.';return}try{const before=await memoGet(p.id);await memoPut(p.id,{note:$('#visit-note').value,photo:file||before.photo||null});$('#memory-status').textContent='Recuerdo guardado en este navegador';if(file){$('#visit-photo-preview').src=URL.createObjectURL(file);$('#visit-photo-preview').hidden=false}}catch(err){console.warn(err);$('#memory-status').textContent='No se pudo guardar. Prueba con una imagen más pequeña.'}})}
 function clock(){try{$('#clock').textContent=new Intl.DateTimeFormat('es-CL',{timeZone:'America/Santiago',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date())}catch{}}
+
+
+// Agrupación en píxeles del mapa: en un planeta alejado varios monumentos
+// pueden compartir prácticamente el mismo lugar en pantalla.
+let mapPinGroups=new Map(),nearbyPreviousFocus=null,clusterFrame=0;
+function clusterScreenPoints(points,distance=45){
+  const groups=[];const used=new Set();
+  for(let i=0;i<points.length;i++){
+    if(used.has(i))continue;
+    const indexes=[i];used.add(i);
+    for(let k=0;k<indexes.length;k++){
+      for(let j=0;j<points.length;j++){
+        if(used.has(j))continue;
+        const a=points[indexes[k]],b=points[j];
+        if(Math.hypot(a.x-b.x,a.y-b.y)<distance){used.add(j);indexes.push(j)}
+      }
+    }
+    groups.push(indexes.map(j=>points[j]));
+  }
+  return groups;
+}
+function closeNearbyChooser(restore=false){
+ const box=$('#nearby-chooser');box.classList.remove('open');box.setAttribute('aria-hidden','true');
+ if(restore && nearbyPreviousFocus?.isConnected)nearbyPreviousFocus.focus();
+ nearbyPreviousFocus=null;
+}
+function openNearbyChooser(list){
+ const values=[...new Map(list.map(p=>[p.id,p])).values()];if(values.length===1){selectPlace(values[0],false);return}
+ if(!values.length)return;
+ nearbyPreviousFocus=document.activeElement;
+ resetPreview();
+ $('#nearby-heading').textContent=values.length+' lugares en esta zona';
+ $('#nearby-options').innerHTML=values.map(p=>`<button type="button" class="nearby-option" data-nearby-id="${escapeHtml(p.id)}"><span class="nearby-symbol" aria-hidden="true">✧</span><span class="nearby-copy"><strong>${escapeHtml(p.name)}</strong><small>${escapeHtml(p.location)} · ${escapeHtml(p.country)}</small></span><span class="nearby-arrow" aria-hidden="true">↗</span></button>`).join('');
+ $('#nearby-chooser').classList.add('open');$('#nearby-chooser').setAttribute('aria-hidden','false');
+ $('#nearby-options').querySelectorAll('[data-nearby-id]').forEach(b=>b.addEventListener('click',()=>{
+   const p=places.find(x=>x.id===b.dataset.nearbyId);closeNearbyChooser();if(p)selectPlace(p,false);
+ }));
+ $('#nearby-options button')?.focus();
+}
+function updateMapPinGroups(){
+ if(!map||!markers.length)return;
+ const size=map.getContainer().getBoundingClientRect(),points=[];
+ for(const marker of markers){
+   const point=map.project([marker.p.lon,marker.p.lat]);
+   if(point.x<-15||point.y<-15||point.x>size.width+15||point.y>size.height+15)continue;
+   if(Number(marker.el.style.opacity||1)<.08)continue;
+   points.push({x:point.x,y:point.y,p:marker.p,marker});
+ }
+ mapPinGroups=new Map();
+ for(const m of markers){m.el.style.display='';m.el.classList.remove('nearby-cluster');m.el.textContent='';}
+ for(const group of clusterScreenPoints(points,44)){
+   const entries=group.map(v=>v.p);
+   group.forEach(v=>mapPinGroups.set(v.p.id,entries));
+   if(group.length<2)continue;
+   const representative=group.find(v=>v.p.id===selected?.id)||group[0];
+   for(const v of group){if(v!==representative)v.marker.el.style.display='none'}
+   representative.marker.el.classList.add('nearby-cluster');
+   representative.marker.el.textContent=String(group.length);
+   representative.marker.el.setAttribute('aria-label',group.length+' lugares cercanos. Toca para elegir');
+ }
+}
+function scheduleMapPinGroups(){if(clusterFrame)return;clusterFrame=requestAnimationFrame(()=>{clusterFrame=0;updateMapPinGroups()})}
 
 function createFallbackGlobe(){
  const host=$('#atlas-globe-stage'),canvas=$('#atlas-globe-canvas'),ctx=canvas.getContext('2d'),pic=$('#atlas-earth-texture');
@@ -197,16 +291,29 @@ function createFallbackGlobe(){
   }
   ctx.putImageData(out,0,0);
   const pins=$('#atlas-globe-pins');
-  pins.innerHTML=places.map(p=>{
-   const a=p.lat*Math.PI/180,b=(p.lon-state.lon)*Math.PI/180;
-   const visible=sl*Math.sin(a)+cl*Math.cos(a)*Math.cos(b);
-   if(visible<.03)return '';
-   const x=Math.cos(a)*Math.sin(b),y=cl*Math.sin(a)-sl*Math.cos(a)*Math.cos(b);
-   const lx=50+x*47.5*state.z,ly=50-y*47.5*state.z;
-   if(lx<2||lx>98||ly<2||ly>98)return '';
-   return `<button type="button" class="atlas-pin ${p.visited?'visited':''} ${selected?.id===p.id?'active':''}" data-id="${p.id}" style="left:${lx}%;top:${ly}%" aria-label="Explorar ${escapeHtml(p.name)}" title="${escapeHtml(p.name)}"></button>`
+  const stageWidth=host.getBoundingClientRect().width||390;
+  const visiblePins=places.map(p=>{
+    const a=p.lat*Math.PI/180,b=(p.lon-state.lon)*Math.PI/180;
+    const visible=sl*Math.sin(a)+cl*Math.cos(a)*Math.cos(b);
+    if(visible<.03)return null;
+    const x=Math.cos(a)*Math.sin(b),y=cl*Math.sin(a)-sl*Math.cos(a)*Math.cos(b);
+    const lx=50+x*47.5*state.z,ly=50-y*47.5*state.z;
+    if(lx<2||lx>98||ly<2||ly>98)return null;
+    return {p,x:lx*stageWidth/100,y:ly*stageWidth/100,lx,ly};
+  }).filter(Boolean);
+  const groups=clusterScreenPoints(visiblePins,38);
+  pins.innerHTML=groups.map(group=>{
+    const center=group.reduce((a,b)=>({lx:a.lx+b.lx,ly:a.ly+b.ly}),{lx:0,ly:0});
+    const lx=center.lx/group.length,ly=center.ly/group.length;
+    const p=group[0].p,count=group.length;
+    return `<button type="button" class="atlas-pin ${count>1?'nearby-cluster':''} ${p.visited?'visited':''} ${group.some(v=>v.p.id===selected?.id)?'active':''}" data-nearby-ids="${group.map(v=>v.p.id).join(',')}" style="left:${lx}%;top:${ly}%" aria-label="${count>1?count+' lugares cercanos. Toca para elegir':'Explorar '+escapeHtml(p.name)}" title="${count>1?'Explorar '+count+' lugares cercanos':escapeHtml(p.name)}">${count>1?count:''}</button>`;
   }).join('');
-  pins.querySelectorAll('button').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const p=places.find(v=>v.id===el.dataset.id);selectPlace(p,false);atlasFallback.mark()}));
+  pins.querySelectorAll('button').forEach(el=>el.addEventListener('click',e=>{
+    e.stopPropagation();
+    const group=el.dataset.nearbyIds.split(',').map(id=>places.find(v=>v.id===id)).filter(Boolean);
+    if(group.length>1)openNearbyChooser(group);
+    else if(group[0]){selectPlace(group[0],false);atlasFallback.mark()}
+  }));
  }
  function resize(){const n=clamp(Math.round(host.getBoundingClientRect().width*Math.min(devicePixelRatio||1,1.2)),210,430);if(n!==canvas.width){canvas.width=n;canvas.height=n}draw()}
  function focus(p){state.lon=wrap(p.lon);state.lat=clamp(p.lat,-75,75);state.z=1.09;draw()}
@@ -286,13 +393,27 @@ function createDetailMap(){
     entry.img.remove();tiles.delete(key);
    }
   }
-  // Reposition only the pins; existing tile images stay in the DOM and browser cache.
-  const frag=document.createDocumentFragment();
+  // Agrupar lugares a menos de 46 píxeles sin exigir un zoom extremo.
+  const projected=[];
   for(const p of places){
    const pt=merc(p.lon,p.lat,level);let dx=pt.x-c.x,n=world(level);if(dx>n/2)dx-=n;if(dx<-n/2)dx+=n;
    const x=w/2+dx*scale,y=h/2+(pt.y-c.y)*scale;
    if(x<20||x>w-20||y<20||y>h-20)continue;
-   const b=document.createElement('button');b.type='button';b.className='detail-pin'+(selected?.id===p.id?' chosen':'');b.style.left=x+'px';b.style.top=y+'px';b.style.pointerEvents='auto';b.title=p.name;b.setAttribute('aria-label','Explorar '+p.name);b.onclick=e=>{e.stopPropagation();selectPlace(p,false)};frag.appendChild(b);
+   projected.push({p,x,y});
+  }
+  const frag=document.createDocumentFragment();
+  for(const group of clusterScreenPoints(projected,46)){
+   const x=group.reduce((n,v)=>n+v.x,0)/group.length;
+   const y=group.reduce((n,v)=>n+v.y,0)/group.length;
+   const p=group[0].p,count=group.length;
+   const b=document.createElement('button');b.type='button';
+   b.className='detail-pin'+(group.some(v=>v.p.id===selected?.id)?' chosen':'')+(count>1?' nearby-cluster':'');
+   b.style.left=x+'px';b.style.top=y+'px';b.style.pointerEvents='auto';
+   b.title=count>1?count+' lugares cercanos':p.name;
+   b.setAttribute('aria-label',count>1?count+' lugares cercanos. Toca para elegir':'Explorar '+p.name);
+   if(count>1)b.textContent=String(count);
+   b.onclick=e=>{e.stopPropagation();if(count>1)openNearbyChooser(group.map(v=>v.p));else selectPlace(p,false)};
+   frag.appendChild(b);
   }
   pinLayer.replaceChildren(frag);
   note.textContent='DETALLE GEOGRÁFICO · NIVEL '+z.toFixed(1);mode.textContent='GLOBO';
@@ -319,7 +440,7 @@ function createDetailMap(){
  window.atlasDetail={active:()=>enabled,zoom,enter,exit,refresh:render};
 }
 
-function init(){createFallbackGlobe();createDetailMap();clock();setInterval(clock,30000);if(window.maplibregl)initMap();else window.addEventListener('atlas-maplibre-ready',initMap,{once:true});$('#open-search').addEventListener('click',()=>{$('#search').showModal();results('');$('#search-input').focus()});$('#close-search').addEventListener('click',()=>$('#search').close());$('#search-input').addEventListener('input',e=>results(e.target.value));$('#preview-close').addEventListener('click',resetPreview);$('#go-exhibit').addEventListener('click',()=>openExhibit(selected));$('#fly-detail').addEventListener('click',()=>{if(!selected)return;if(map&&$('#atlas-globe-stage').classList.contains('hidden'))flyTo(selected,12);else atlasDetail.enter(selected,12)});$('#zoom-in').addEventListener('click',()=>{if(map&&$('#atlas-globe-stage').classList.contains('hidden'))map.zoomIn({duration:600});else if(atlasDetail?.active())atlasDetail.zoom(1);else atlasFallback?.zoomBy(1.21)});$('#zoom-out').addEventListener('click',()=>{if(map&&$('#atlas-globe-stage').classList.contains('hidden'))map.zoomOut({duration:600});else if(atlasDetail?.active())atlasDetail.zoom(-1);else atlasFallback?.zoomBy(1/1.21)});$('#layer-switch').addEventListener('click',()=>{if(!map||!$('#atlas-globe-stage').classList.contains('hidden')){if(atlasDetail?.active())atlasDetail.exit();else atlasDetail.enter(selected||{lat:12,lon:29},3);return;}layer=layer==='satelite'?'mapa':'satelite';$('#layer-switch').textContent=layer==='satelite'?'MAPA':'SATÉLITE';map.setStyle(tileStyle(layer))});$('#close-expo').addEventListener('click',closeExhibit);window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#exhibition').classList.contains('open'))closeExhibit()});let q=new URLSearchParams(location.search).get('lugar');if(q){let p=places.find(x=>x.id===q);if(p)setTimeout(()=>selectPlace(p,false),250)}}
+function init(){$('#nearby-close').addEventListener('click',()=>closeNearbyChooser(true));window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#nearby-chooser').classList.contains('open')){e.preventDefault();closeNearbyChooser(true)}});createFallbackGlobe();createDetailMap();clock();setInterval(clock,30000);if(window.maplibregl)initMap();else window.addEventListener('atlas-maplibre-ready',initMap,{once:true});$('#open-search').addEventListener('click',()=>{$('#search').showModal();results('');$('#search-input').focus()});$('#close-search').addEventListener('click',()=>$('#search').close());$('#search-input').addEventListener('input',e=>results(e.target.value));$('#preview-close').addEventListener('click',resetPreview);$('#go-exhibit').addEventListener('click',()=>openExhibit(selected));$('#fly-detail').addEventListener('click',()=>{if(!selected)return;if(map&&$('#atlas-globe-stage').classList.contains('hidden'))flyTo(selected,12);else atlasDetail.enter(selected,12)});$('#zoom-in').addEventListener('click',()=>{if(map&&$('#atlas-globe-stage').classList.contains('hidden'))map.zoomIn({duration:600});else if(atlasDetail?.active())atlasDetail.zoom(1);else atlasFallback?.zoomBy(1.21)});$('#zoom-out').addEventListener('click',()=>{if(map&&$('#atlas-globe-stage').classList.contains('hidden'))map.zoomOut({duration:600});else if(atlasDetail?.active())atlasDetail.zoom(-1);else atlasFallback?.zoomBy(1/1.21)});$('#layer-switch').addEventListener('click',()=>{if(!map||!$('#atlas-globe-stage').classList.contains('hidden')){if(atlasDetail?.active())atlasDetail.exit();else atlasDetail.enter(selected||{lat:12,lon:29},3);return;}layer=layer==='satelite'?'mapa':'satelite';$('#layer-switch').textContent=layer==='satelite'?'MAPA':'SATÉLITE';map.setStyle(tileStyle(layer))});$('#close-expo').addEventListener('click',closeExhibit);window.addEventListener('keydown',e=>{if(e.key==='Escape'&&$('#exhibition').classList.contains('open'))closeExhibit()});let q=new URLSearchParams(location.search).get('lugar');if(q){let p=places.find(x=>x.id===q);if(p)setTimeout(()=>selectPlace(p,false),250)}}
 
 /* ATLAS 0.8: nueva interfaz de exploración. No toca los gestos, capas o zoom del mapa v0.7. */
 const archiveKey='atlas-inmersion-archive-v1';
