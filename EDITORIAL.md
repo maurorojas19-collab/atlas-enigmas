@@ -37,3 +37,13 @@ No publicar un texto con datos sin contrastar, fotografías genéricas/descontex
 
 ## Tecnología y estabilidad
 La versión estable del mapa, zoom táctil, ciclo día/noche y marcadores agrupados se debe preservar durante el trabajo de artículos. No se modifica el motor del globo para hacer cambios editoriales.
+
+
+## Estándar de referencia · KV17, versión enriquecida (28-10-2026)
+- El lector accede a **un único reportaje completo**, integrado en la exposición sin saltos obligatorios a un segundo texto.
+- El artículo emplea **evidencia espacial**: planos técnicos vinculados a su autoría y esquemas pedagógicos propios rotulados expresamente «no a escala».
+- Las fotografías se acercan al pasaje que explican, muestran autor y licencia, y se acompañan de observaciones sobre lo que el lector realmente puede distinguir.
+- Las afirmaciones técnicas y los debates no resueltos enlazan la **fuente primaria o académica pertinente** junto al texto y mantienen bibliografía final.
+- Se explica **cómo se obtiene la evidencia**: trazos preparatorios, pigmentos, planos, estudios de fragmentos, arqueología de conservación y escaneo no invasivo.
+- Se evitan repeticiones y alusiones sensacionalistas innecesarias. La emoción nace de preguntas históricas reales.
+- Antes de cada publicación se verifica el artículo íntegro, los enlaces, la galería, las licencias, el estado móvil y el despliegue. No alterar el motor estable del globo.
