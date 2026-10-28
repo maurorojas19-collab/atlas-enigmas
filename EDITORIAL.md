@@ -53,3 +53,8 @@ La versión estable del mapa, zoom táctil, ciclo día/noche y marcadores agrupa
 - Fotografías de archivo de Wikimedia Commons, con créditos y enlace de licencia; las cuatro fotografías personales aportadas por el usuario están publicadas en `/assets/giza/` y se muestran en el relato y la galería; no atribuir el pasadizo interior a una pirámide concreta sin documentación.
 - La exposición de Guiza abre el artículo completo sin duplicaciones, seguida de la galería interactiva con guía para observar cada imagen.
 - La hipótesis sobre rampas, los descubrimientos de ScanPyramids y la atribución de estructuras se describen con incertidumbre científica explícita.
+
+## Actualización fotográfica de Guiza (28-10-2026)
+- Se incorporaron tres fotografías personales adicionales: acceso original con bloques en V invertida (05), interior de recinto revestido de granito sin atribución de cámara no confirmada (06), y Gran Galería ascendente (07).
+- Se mantienen los créditos individuales y la licencia reservada del archivo personal; ahora son siete fotografías personales en total.
+- Se integraron en el relato en sus contextos arqueológicos y en la galería de la exposición, con guías de observación diferenciadas.
