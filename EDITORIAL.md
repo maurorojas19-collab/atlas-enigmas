@@ -1,7 +1,7 @@
-# ATLAS · Manual editorial
+# TELLUS | EL ATLAS · Manual editorial
 
 **Estado:** versión 1.0, aprobado el 28 de octubre de 2026.
-**Ámbito:** todos los artículos del proyecto ATLAS, incluidas exposiciones inmersivas y sus futuras ampliaciones.
+**Ámbito:** todos los artículos del proyecto TELLUS, incluidas exposiciones inmersivas y sus futuras ampliaciones.
 
 ## Propósito
 Construir una enciclopedia geográfica y cultural que haga sentir al lector que recorre el lugar. El globo interactivo es la puerta de entrada; cada destino ofrece un reportaje histórico de largo aliento, fotografías útiles y una bitácora personal de viaje integrada, diferenciada del contenido editorial público.
