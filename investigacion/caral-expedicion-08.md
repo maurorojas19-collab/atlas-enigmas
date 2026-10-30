@@ -1,6 +1,6 @@
 # Expedición 08 · Caral-Supe
 **Zona geográfica:** Andes centrales · valle de Supe, costa central de Perú  
-**Estado al 30-10-2026:** expediente de investigación abierto. **No publicado como octava crónica.** La ficha introductoria del marcador Caral sí fue enriquecida con datos verificables.
+**Estado al 30-10-2026:** **octava crónica integrada y publicada en la rama principal** en `/caral.html`, con carga del reportaje completo desde las fichas del globo (`index.html` e `inmersion.html`). Auditoría estructural y de fuentes realizada. **Pruebas táctiles en un iPhone real, carga HTTP individual de fotografías externas y contraste visual final aún pendientes.**
 
 ## Pregunta rectora
 **¿Cómo surgió una de las sociedades urbanas más tempranas de América entre el desierto, un río y el océano, miles de años antes de los incas?**
@@ -54,6 +54,16 @@ Desde una terraza árida se ve el valle verde del Supe. La diferencia parece imp
 7. [Metropolitan Museum of Art, *Music in the Ancient Andes*](https://www.metmuseum.org/es/essays/music-in-the-ancient-andes), música y flautas.
 8. [Gobierno del Perú, hallazgos en seis centros urbanos](https://www.gob.pe/institucion/caral/noticias/661865-presentan-centros-urbanos-que-conformaron-el-nucleo-de-la-civilizacion-caral), red regional y materiales arqueológicos.
 
+## Registro de publicación y calidad (30-10-2026)
+- **Título final:** *Caral: la ciudad que floreció entre el desierto y el mar*.
+- **Extensión:** 2.136 palabras de prosa y 25 párrafos de lectura continua, más epígrafes, dos esquemas propios y bibliografía.
+- **Fotografías:** nueve archivos de Wikimedia Commons diferenciados, con ficha, autoría y licencia visibles. Portada: Ssola (CC BY-SA 3.0); resto: Johnattan Rupire, Gisela Xiomara Garcia Almonacid, Sheyla F. Crovetto, Juanmeneses7, Paulo JC Nogueira y Mayhely Aida (CC BY-SA 3.0 o 4.0 según ficha).
+- **Distribución visual:** una portada, cinco fotografías acompañando el texto y tres fotografías en galería complementaria. No duplicar un mismo archivo en posiciones diferentes. Dentro del globo se cargan las cinco fotografías narrativas y la galería final complementaria.
+- **Gráficos originales:** relación general entre Pacífico, valle y terraza desértica, y un esquema de plaza circular y plataforma. Ambos identificados como conceptuales y no a escala; nunca exhibirlos como levantamientos arqueológicos.
+- **Referencias:** nueve fuentes documentales en el cierre, con enlaces adicionales junto a hechos históricos, dataciones y debates interpretativos.
+- **Controles estáticos:** HTML con 25 párrafos de narración, nueve elementos `img` con `alt` y nueve orígenes de imagen únicos; ocho crónicas completas sobre 18 destinos. Ambas entradas del globo idénticas, con JavaScript analizado sin errores de sintaxis.
+- **Pendiente:** comprobar fotografías reales por HTTP en la web publicada, navegación/tamaño de letra y comportamiento de galería en iPhone, además de rendimiento bajo red móvil.
+
 ## Criterios de autorización para publicar
 - 1.500–2.200 palabras normalmente, relato continuo y no una lista escolar.
 - Verificación individual de las afirmaciones; contexto de los estudios sobre radiocarbono.
@@ -62,4 +72,4 @@ Desde una terraza árida se ve el valle verde del Supe. La diferencia parece imp
 - Prueba de lectura en celular y apertura completa desde la ficha del globo.
 - Mantener 18 lugares: Caral ya ocupa un marcador; su publicación no añadiría un duplicado.
 
-**Próxima decisión editorial:** desarrollar y cerrar el reportaje solo después de la curaduría visual y el contraste de fuentes; no anunciarlo como publicado.
+**Próxima decisión editorial:** auditoría visual real del reportaje en móvil y confirmación individual de recursos HTTP externos. La publicación ya se ejecutó; las limitaciones anteriores permanecen señaladas sin presentarse como verificadas.
