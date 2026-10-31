@@ -61,3 +61,22 @@ El motor incluye un globo canvas de respaldo, MapLibre GL y una superficie geogr
 **Pruebas completadas:** lectura de implementación real de GitHub; validación sintáctica JavaScript del documento; verificación de integridad del arreglo de destinos; despliegue `live` confirmado por Render.
 
 **Pruebas que permanecen pendientes:** recorrido visual y táctil real en Safari/iPhone; reproducción de comportamiento con CDN lento, sin WebGL o red inestable; medición objetiva de FPS y continuidad de teselas; verificación en computador. El despliegue automático correcto no certifica por sí mismo la calidad perceptiva de una transición.
+
+
+## Restauración de versión histórica · 31-10-2026
+
+**Incidente informado:** el director confirma que, incluso tras dos rondas de modificaciones del 31 de octubre, el zoom en iPhone seguía funcionando peor que unos días antes.
+
+**Decisión:** revertir selectivamente el motor y las transiciones de navegación al estado del commit histórico `eecb449d5bb626d2582960c92989a2764d20a03d`, fechado el **29 de octubre de 2026** (mensaje: «TELLUS: transición más fluida y acceso a lugares próximos en index.html»).
+
+**Intervención selectiva:** restauración íntegra de las reglas CSS de fundido globo/mapa, inicialización MapLibre y sus eventos, gestos del globo canvas, mapa de detalle y cargador asíncrono de MapLibre. Se retiró el temporizador de coordinación experimental introducido el 31 de octubre.
+
+**Preservación contrastada:** continuaron las 18 entradas geográficas, los cargadores de los reportajes completos, Caral, Chichén Itzá, enlaces a sus fotografías personales, textura del globo, favoritos y aplicación del archivo.
+
+**Commit correctivo:** `b7eaa31277394ed909936cc948f7a41160c807e9`. Despliegue de Render `live` confirmado.
+
+**Pruebas completadas:** coincidencia de componentes de navegación restaurados con GitHub 29-10; compilación sintáctica del script principal; comparación exacta del arreglo `places`; comprobación de 18 destinos y preservación de referencias a las expediciones; despliegue automático `live`.
+
+**Pendiente:** validación táctil REAL en Safari iPhone, carga rápida/lenta de teselas, navegación inversa de mapa a globo y verificación en PC. No interpretar `live` como garantía perceptiva de fluidez. El director confirmará si la navegación vuelve a sentirse como los días previos.
+
+**Lección:** cuando una función aprobada era estable, priorizar la recuperación desde historial y pruebas de regresión en vez de seguir acumulando cambios especulativos. No tocar nuevamente el motor sin caso reproducible.
