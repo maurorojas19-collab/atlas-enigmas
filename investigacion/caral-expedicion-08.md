@@ -64,6 +64,24 @@ Desde una terraza árida se ve el valle verde del Supe. La diferencia parece imp
 - **Controles estáticos:** HTML con 25 párrafos de narración, nueve elementos `img` con `alt` y nueve orígenes de imagen únicos; ocho crónicas completas sobre 18 destinos. Ambas entradas del globo idénticas, con JavaScript analizado sin errores de sintaxis.
 - **Pendiente:** comprobar fotografías reales por HTTP en la web publicada, navegación/tamaño de letra y comportamiento de galería en iPhone, además de rendimiento bajo red móvil.
 
+## Segunda edición: Caral 2.0 · 31-10-2026
+
+**Estado:** mejora visual y editorial ejecutada en la rama de publicación y desplegada en Render. Reportaje en `caral.html`, accesible desde el globo, con 18 destinos originales y ocho crónicas completas.
+
+**Modificaciones realizadas**
+- Portada panorámica rediseñada con fotografía auténtica de Shania Dayadi Solar Arotinco (CC BY-SA 4.0). Composición editorial a pantalla amplia; en pantallas pequeñas no se fuerza un recorte severo de la fotografía.
+- Navegación interna discreta entre paisaje, arquitectura, shicras, música y archivo visual. La narración sigue siendo continua, sin capítulos escolares.
+- Cuatro recursos documentales nuevos junto a los pasajes correspondientes: vista del valle de Supe (QM Keen, CC BY-SA 4.0); fotografía de un panel con plano del sitio (Deysi Mercedes Tito Curo, CC BY-SA 4.0); demostración contemporánea de fabricación de shicras (Sandro Ruiz Peralta, CC BY-SA 4.0); fotografía de flautas de Caral (Markschreibber, CC0 1.0).
+- **Cuidado de evidencia:** el panel se acredita como fotografía de información interpretativa, nunca como un plano arqueológico original de TELLUS. La demostración de shicras no se presenta como artefacto original de cinco milenios. La fotografía de las flautas no incluye una interpretación musical reconstruida.
+- Cronología curatorial, geolocalización sobre OpenStreetMap con marcador aproximado y los dos esquemas originales de Caral, identificados como conceptuales.
+- Mejora de epígrafes, contraste, tipografía, márgenes, adaptaciones a móvil y tarjetas visuales.
+- Metadatos Open Graph para compartir el artículo con portada visual.
+- Bibliografía mejorada: reemplazados tres registros redundantes o no arqueológicos por el expediente UNESCO de candidatura, evaluación ICOMOS y documentos sobre asentamientos regionales.
+
+**Verificación estática:** 13 etiquetas `img`, 13 fotografías diferentes en el artículo independiente (cada una con texto alternativo), 9 referencias en bibliografía, 2 diagramas SVG propios y 1 mapa cartográfico incrustado con carga diferida. `index.html` e `inmersion.html` deben mantenerse idénticos y Caral se continúa abriendo como crónica completa.
+
+**Pruebas aún pendientes:** inspección en un iPhone real y HTTP efectivo de cada archivo de Wikimedia Commons y del mapa incrustado; prueba de lectura y retorno al globo bajo red móvil lenta. No asignar nota técnica definitiva sin esas comprobaciones.
+
 ## Criterios de autorización para publicar
 - 1.500–2.200 palabras normalmente, relato continuo y no una lista escolar.
 - Verificación individual de las afirmaciones; contexto de los estudios sobre radiocarbono.
