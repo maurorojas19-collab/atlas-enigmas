@@ -80,3 +80,10 @@ Las fichas verificadas en Wikimedia Commons documentan imágenes y licencias. Ca
 5. Verificar en Render que el deploy correspondiente al commit de integración terminó correctamente y sirve ambos archivos.
 
 **Regla de continuidad:** conservar las crónicas ya aprobadas. Modificar únicamente errores comprobados y registrar la corrección.
+
+
+## Integración de fotografías propias · 31-10-2026
+
+Diez fotografías originales del fundador han sido incorporadas a `assets/chichen/` como WebP con ajustes tonales no generativos; dos edificios permanecen sin identificación específica y **no se etiquetan como monumentos concretos**. El reportaje usa fotografías propias en las secciones de El Castillo, juego de pelota, Templo de los Guerreros y escultura de serpientes. La galería combina fotografías del archivo personal con cinco materiales externos indispensables para el contexto (cenote, observatorio, efecto de luz, tzompantli, Osario). La sección pública «La mirada de quien estuvo allí» distingue explícitamente experiencia personal de evidencia arqueológica. Créditos: archivo personal del fundador, derechos reservados.
+
+**Despliegue previo de la crónica sin fotos personales:** Render confirmó estado `live` para el commit `d1dc4b4`. La integración fotográfica requiere verificar el nuevo commit después de la publicación automática. Ninguna afirmación sobre comprobación visual de iPhone/desktop hasta ejecutar prueba real.
