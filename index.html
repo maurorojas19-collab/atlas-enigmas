@@ -157,14 +157,14 @@
 
 
 /* ATLAS 1.0: transición continua entre globo y cartografía. No altera el zoom geográfico. */
-#atlas-globe-stage{opacity:1;transition:opacity 1250ms ease-in-out,transform 1350ms cubic-bezier(.22,.65,.24,1);will-change:opacity,transform}
-#atlas-globe-stage.atlas-globe-approaching{transform:translate(-50%,-50%) scale(1.13)}
-#atlas-globe-stage.atlas-globe-leaving{transform:translate(-50%,-50%) scale(1.30);opacity:0;pointer-events:none}
-#atlas-globe-stage.atlas-globe-arriving{transform:translate(-50%,-50%) scale(1.30);opacity:0;pointer-events:none}
-#atlas-detail-surface{opacity:0;transition:opacity 1250ms ease-in-out;pointer-events:none;will-change:opacity}
+#atlas-globe-stage{opacity:1;transition:opacity 520ms ease-out,transform 580ms cubic-bezier(.25,.68,.32,1);will-change:opacity,transform}
+#atlas-globe-stage.atlas-globe-approaching{transform:translate(-50%,-50%) scale(1.035)}
+#atlas-globe-stage.atlas-globe-leaving{transform:translate(-50%,-50%) scale(1.075);opacity:0;pointer-events:none}
+#atlas-globe-stage.atlas-globe-arriving{transform:translate(-50%,-50%) scale(1.075);opacity:0;pointer-events:none}
+#atlas-detail-surface{opacity:0;transition:opacity 520ms ease-out;pointer-events:none}
 #atlas-detail-surface.has-tiles{opacity:1;pointer-events:auto}
 #atlas-detail-surface.atlas-detail-returning{opacity:0;pointer-events:none}
-#planet-map{opacity:0;transition:opacity 1250ms ease-in-out}
+#planet-map{opacity:0;transition:opacity 520ms ease-out}
 #planet-map.atlas-map-visible{opacity:1}
 @media(prefers-reduced-motion:reduce){
  #atlas-globe-stage,#atlas-detail-surface,#planet-map{transition:none!important}
@@ -441,19 +441,23 @@ const photo=(file,alt,cl='')=>`<img class="${cl}" alt="${escapeHtml(alt)}" loadi
 const solar=()=>{const n=new Date(),utc=n.getUTCHours()+n.getUTCMinutes()/60+ n.getUTCSeconds()/3600,year=n.getUTCFullYear();let d=(Date.UTC(year,n.getUTCMonth(),n.getUTCDate())-Date.UTC(year,0,0))/86400000;return {decl:23.44*Math.sin(2*Math.PI*(d-81)/365.2422)*Math.PI/180,lon:(12-utc)*15}};
 function nightData(){let o=[],sun=solar();for(let lat=-85;lat<85;lat+=5){for(let lon=-180;lon<180;lon+=5){const a=(lat+2.5)*Math.PI/180,b=(lon+2.5-sun.lon)*Math.PI/180;const v=Math.sin(a)*Math.sin(sun.decl)+Math.cos(a)*Math.cos(sun.decl)*Math.cos(b);const shade=Math.min(.75,Math.max(0,(-v+.06)*2));if(shade>.02)o.push({type:'Feature',geometry:{type:'Polygon',coordinates:[[[lon,lat],[lon+5,lat],[lon+5,lat+5],[lon,lat+5],[lon,lat]]]},properties:{shade}})}}return {type:'FeatureCollection',features:o}}
 function tileStyle(mode){if(mode==='mapa')return 'https://tiles.openfreemap.org/styles/fiord';return {version:8,sources:{sat:{type:'raster',tiles:['https://tiles.maps.eox.at/wmts/1.0.0/s2cloudless-2020_3857/default/g/{z}/{y}/{x}.jpg'],minzoom:0,maxzoom:14,tileSize:256,attribution:'Sentinel-2 cloudless © EOX IT Services GmbH'}},layers:[{id:'space',type:'background',paint:{'background-color':'#071019'}},{id:'satellite',type:'raster',source:'sat',paint:{'raster-fade-duration':400}}]}}
-const atlasHandoffDelay=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches?40:1500;
-function initMap(){if(map || !window.maplibregl || !maplibregl.supported()){return}try{map=new maplibregl.Map({container:'planet-map',style:tileStyle('satelite'),center:[25,16],zoom:1.45,projection:'globe',minZoom:0.5,maxZoom:16,pitch:0,attributionControl:true,renderWorldCopies:false,dragRotate:false,touchPitch:false,touchZoomRotate:true,dragPan:true,cooperativeGestures:false});map.touchZoomRotate.enable();map.dragPan.enable();map.on('style.load',()=>{map.setProjection({type:'globe'});if(typeof map.setSky==='function')map.setSky({'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,5,1,7,0]});if(!map.getSource('night'))map.addSource('night',{type:'geojson',data:nightData()});if(!map.getLayer('night'))map.addLayer({id:'night',type:'fill',source:'night',paint:{'fill-color':'#020912','fill-opacity':['*',['get','shade'],['interpolate',['linear'],['zoom'],0,1,5,.8,9,0]]}});mapReady=true});let revealed=false;
-map.on('sourcedata',e=>{
- if(e.sourceId!=='sat'||!e.isSourceLoaded||revealed||window.atlasDetail?.active())return;
+const atlasHandoffDelay=()=>window.matchMedia('(prefers-reduced-motion: reduce)').matches?40:650;
+function initMap(){if(map || !window.maplibregl || !maplibregl.supported()){return}try{map=new maplibregl.Map({container:'planet-map',style:tileStyle('satelite'),center:[25,16],zoom:1.45,projection:'globe',minZoom:0.5,maxZoom:16,pitch:0,attributionControl:true,renderWorldCopies:false,dragRotate:false,touchPitch:false,touchZoomRotate:true,dragPan:true,cooperativeGestures:false});map.touchZoomRotate.enable();map.dragPan.enable();map.on('style.load',()=>{map.setProjection({type:'globe'});if(typeof map.setSky==='function')map.setSky({'atmosphere-blend':['interpolate',['linear'],['zoom'],0,1,5,1,7,0]});if(!map.getSource('night'))map.addSource('night',{type:'geojson',data:nightData()});if(!map.getLayer('night'))map.addLayer({id:'night',type:'fill',source:'night',paint:{'fill-color':'#020912','fill-opacity':['*',['get','shade'],['interpolate',['linear'],['zoom'],0,1,5,.8,9,0]]}});mapReady=true});let revealed=false,tilesReady=false;
+function revealMap(){
+ if(revealed||!tilesReady||window.atlasDetail?.active()||window.atlasFallback?.isInteracting?.())return false;
  revealed=true;
- const stage=$('#atlas-globe-stage'),surface=$('#planet-map');
- const view=window.atlasFallback?.getView?.();
- if(view){try{map.jumpTo({center:[view.lon,view.lat],zoom:Math.max(.65,Math.min(2.3,1.45+(view.zoom-1)*.8))})}catch(err){console.warn('ATLAS: ajuste inicial de cámara',err)}}
- if(window.atlasDetail)atlasDetail.exit(true);
- surface.classList.add('atlas-map-visible');stage.classList.add('atlas-globe-leaving');
+ const stage=$('#atlas-globe-stage'),surface=$('#planet-map'),view=window.atlasFallback?.getView?.();
+ if(view){try{map.jumpTo({center:[view.lon,view.lat],zoom:Math.max(.8,Math.min(2.65,Math.log2(Math.max(280,stage.getBoundingClientRect().width)*2.1/256)))})}catch(err){console.warn('ATLAS: sincronización de cámara',err)}}
+ surface.classList.add('atlas-map-visible');
+ stage.classList.remove('atlas-globe-approaching','atlas-globe-arriving');
+ stage.classList.add('atlas-globe-leaving');
  setTimeout(()=>{if(window.atlasDetail?.active())return;stage.classList.add('hidden');stage.classList.remove('atlas-globe-leaving')},atlasHandoffDelay());
- $('#map-mode-note').textContent='SATÉLITE · DESLIZA Y HAZ PINZA PARA ACERCAR';
-});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.stopPropagation();const group=mapPinGroups.get(p.id);if(group?.length>1)openNearbyChooser(group);else selectPlace(p,true)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;scheduleMapPinGroups();map.on('move',scheduleMapPinGroups);map.on('zoomend',scheduleMapPinGroups);});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)});nightTimer=setInterval(()=>{if(map&&map.getSource('night'))map.getSource('night').setData(nightData())},180000)}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
+ $('#map-mode-note').textContent='SATÉLITE · DESLIZA Y HAZ PINZA PARA ACERCAR';return true;
+}
+window.atlasMapTilesReady=()=>tilesReady;
+window.atlasMapReveal=revealMap;
+window.addEventListener('atlas-globe-idle',revealMap);
+map.on('sourcedata',e=>{if(e.sourceId!=='sat'||!e.isSourceLoaded)return;tilesReady=true;revealMap()});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.stopPropagation();const group=mapPinGroups.get(p.id);if(group?.length>1)openNearbyChooser(group);else selectPlace(p,true)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;scheduleMapPinGroups();map.on('move',scheduleMapPinGroups);map.on('zoomend',scheduleMapPinGroups);});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)});nightTimer=setInterval(()=>{if(map&&map.getSource('night'))map.getSource('night').setData(nightData())},180000)}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
 function flyTo(p,zoom=4){if(map && $('#atlas-globe-stage').classList.contains('hidden'))map.flyTo({center:[p.lon,p.lat],zoom,speed:0.75,curve:1.4,essential:true});else if(window.atlasDetail?.active())atlasDetail.enter(p,zoom);else if(window.atlasFallback)atlasFallback.focus(p)}
 function selectPlace(p,fly=true){closeNearbyChooser();selected=p;markers.forEach(m=>m.el.classList.toggle('active',m.p.id===p.id));$('#preview').classList.add('open');$('#hero-copy').style.opacity='0';$('#preview-index').textContent='EXPOSICIÓN '+p.vol+' / '+places.length+(tellusFullReports.has(p.id)?' · CRÓNICA COMPLETA':' · FICHA INTRODUCTORIA');$('#preview-title').textContent=p.name;$('#preview-lead').textContent=p.subtitle+'. '+p.lead;$('#preview-region').textContent=p.country+' · '+p.location;$('#preview-visited').textContent=p.visited?'● YA VISITASTE ESTE LUGAR':'';let im=$('#preview-image');im.src=photoUrl(p.image,1100);im.alt='Vista de '+p.name;im.onerror=()=>{im.alt='Fotografía de archivo no disponible';im.style.display='none'};im.onload=()=>im.style.display='block';if(fly)flyTo(p,4.6);scheduleMapPinGroups();if(window.atlasFallback && !$('#atlas-globe-stage').classList.contains('hidden'))atlasFallback.mark();updatePersonalControls()}
 function resetPreview(){$('#preview').classList.remove('open');$('#hero-copy').style.opacity='1';markers.forEach(m=>m.el.classList.remove('active'))}
@@ -775,24 +779,36 @@ function createFallbackGlobe(){
   }));
  }
  function resize(){const n=clamp(Math.round(host.getBoundingClientRect().width*Math.min(devicePixelRatio||1,1.2)),210,430);if(n!==canvas.width){canvas.width=n;canvas.height=n}draw()}
- function focus(p){state.lon=wrap(p.lon);state.lat=clamp(p.lat,-75,75);state.z=1.09;draw()}
- function zoomBy(k){state.z=clamp(state.z*k,.83,1.42);draw();if(state.z>=1.28 && window.atlasDetail && (!map || !host.classList.contains('hidden'))){atlasDetail.enter({lat:state.lat,lon:state.lon},3.25);state.z=1.08}}
+ function focus(p){state.lon=wrap(p.lon);state.lat=clamp(p.lat,-75,75);state.z=1.09;handoffStarted=false;draw()}
+ let handoffStarted=false;
+ const entryZoom=()=>clamp(Math.log2(Math.max(280,host.getBoundingClientRect().width)*2.1/256),1.7,2.65);
+ function requestHandoff(){
+  if(handoffStarted||host.classList.contains('hidden'))return;
+  if(window.atlasMapTilesReady?.()){
+   if(!window.atlasFallback?.isInteracting?.()&&window.atlasMapReveal?.())handoffStarted=true;
+   return;
+  }
+  if(!window.atlasDetail)return;
+  handoffStarted=true;
+  window.atlasDetail.enter({lat:state.lat,lon:state.lon},entryZoom());
+ }
+ function zoomBy(k){if(handoffStarted)return;state.z=clamp(state.z*k,.83,1.42);draw();if(state.z>=1.28)requestHandoff()}
  const contacts=new Map();let dragStart=null;
  canvas.addEventListener('pointerdown',e=>{e.preventDefault();canvas.setPointerCapture(e.pointerId);contacts.set(e.pointerId,{x:e.clientX,y:e.clientY});dragStart={x:e.clientX,y:e.clientY}});
  canvas.addEventListener('pointermove',e=>{
-  const prev=contacts.get(e.pointerId);if(!prev)return;e.preventDefault();
+  const prev=contacts.get(e.pointerId);if(!prev)return;e.preventDefault();if(handoffStarted)return;
   if(contacts.size===1){const dx=e.clientX-prev.x,dy=e.clientY-prev.y;state.lon=wrap(state.lon-dx*.48/state.z);state.lat=clamp(state.lat+dy*.43/state.z,-76,76)}
-  else{const other=[...contacts.entries()].find(([id])=>id!==e.pointerId)?.[1];if(other){let d=Math.hypot(e.clientX-other.x,e.clientY-other.y),old=Math.hypot(prev.x-other.x,prev.y-other.y);if(old>8){state.z=clamp(state.z*d/old,.83,1.42);if(state.z>=1.28&&window.atlasDetail){atlasDetail.enter({lat:state.lat,lon:state.lon},3.25);state.z=1.08}}}}
+  else{const other=[...contacts.entries()].find(([id])=>id!==e.pointerId)?.[1];if(other){let d=Math.hypot(e.clientX-other.x,e.clientY-other.y),old=Math.hypot(prev.x-other.x,prev.y-other.y);if(old>8){state.z=clamp(state.z*d/old,.83,1.42);if(state.z>=1.28)requestHandoff()}}}
   contacts.set(e.pointerId,{x:e.clientX,y:e.clientY});
   if(state.frame)cancelAnimationFrame(state.frame);state.frame=requestAnimationFrame(draw);
  });
- for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,e=>contacts.delete(e.pointerId));
+ for(const ev of ['pointerup','pointercancel','lostpointercapture'])canvas.addEventListener(ev,e=>{contacts.delete(e.pointerId);if(!contacts.size)window.dispatchEvent(new Event('atlas-globe-idle'))});
  canvas.addEventListener('wheel',e=>{e.preventDefault();zoomBy(e.deltaY<0?1.12:1/1.12)},{passive:false});
  canvas.addEventListener('keydown',e=>{if(e.key==='ArrowLeft')state.lon=wrap(state.lon+12);if(e.key==='ArrowRight')state.lon=wrap(state.lon-12);if(e.key==='ArrowUp')state.lat=clamp(state.lat-10,-75,75);if(e.key==='ArrowDown')state.lat=clamp(state.lat+10,-75,75);draw()});
  const initTex=()=>{if(!pic.naturalWidth)return;try{const temp=document.createElement('canvas');temp.width=pic.naturalWidth;temp.height=pic.naturalHeight;const c=temp.getContext('2d',{willReadFrequently:true});c.drawImage(pic,0,0);state.texture=c.getImageData(0,0,temp.width,temp.height).data;state.tw=temp.width;state.th=temp.height;resize()}catch(e){console.warn('Texture failed',e)}};
  if(pic.complete&&pic.naturalWidth)initTex();else pic.addEventListener('load',initTex,{once:true});
  window.addEventListener('resize',resize,{passive:true});setInterval(draw,180000);
- window.atlasFallback={zoomBy,focus,mark:draw,getView:()=>({lat:state.lat,lon:state.lon,zoom:state.z})};
+ window.atlasFallback={zoomBy,focus,mark:draw,isInteracting:()=>contacts.size>0,getView:()=>({lat:state.lat,lon:state.lon,zoom:state.z})};
 }
 
 
@@ -816,7 +832,9 @@ function createDetailMap(){
   // No hacer el corte hasta tener varias teselas. Si la red es lenta,
   // empezar el fundido unos instantes después de que llegue la primera.
   const readyTiles=[...tiles.values()].filter(t=>t.loaded && t.img.isConnected && t.img.style.visibility!=='hidden').length;
-  if(readyTiles<3 && performance.now()-firstTileTime<1400){
+  const cx=el.clientWidth/2,cy=el.clientHeight/2,level=Math.floor(z);
+  const centerReady=[...tiles.values()].some(t=>t.loaded&&t.z===level&&cx>=parseFloat(t.img.style.left)&&cx<parseFloat(t.img.style.left)+parseFloat(t.img.style.width)&&cy>=parseFloat(t.img.style.top)&&cy<parseFloat(t.img.style.top)+parseFloat(t.img.style.height));
+  if(!centerReady||(readyTiles<3&&performance.now()-firstTileTime<1600)){
     if(!loadPaintTimer)loadPaintTimer=setTimeout(()=>{loadPaintTimer=null;showDetails()},140);
     return;
   }
@@ -917,16 +935,16 @@ function createDetailMap(){
     // Establecer primero el estado inicial antes de animar hacia el globo.
     void stage.offsetWidth;
     requestAnimationFrame(()=>{stage.classList.remove('atlas-globe-arriving');el.classList.add('atlas-detail-returning')});
-    handoffTimer=setTimeout(reset,atlasHandoffDelay());
-  }else{stage.classList.remove('atlas-globe-arriving');reset()}
+    handoffTimer=setTimeout(()=>{reset();window.dispatchEvent(new Event('atlas-globe-idle'))},atlasHandoffDelay());
+  }else{stage.classList.remove('atlas-globe-arriving');reset();window.dispatchEvent(new Event('atlas-globe-idle'))}
   mode.textContent='MAPA';note.textContent='GIRA EL PLANETA · TOCA UN DESTINO';
 }
  function enter(p,zoom=3){
   if(!p)return;
   // Si el mapa ya está abierto, reposicionar sin reiniciar teselas ni la transición.
-  if(enabled&&firstReady){lat=clip(p.lat,-83,83);lon=wrap(p.lon);z=clip(zoom,2.5,14);render();return}
+  if(enabled&&firstReady){lat=clip(p.lat,-83,83);lon=wrap(p.lon);z=clip(zoom,1.7,14);render();return}
   clearTimeout(handoffTimer);clearTimeout(loadPaintTimer);clearTimeout(deadline);
-  enabled=true;lat=clip(p.lat,-83,83);lon=wrap(p.lon);z=clip(zoom,2.5,14);firstReady=false;firstTileTime=0;loadPaintTimer=null;
+  enabled=true;lat=clip(p.lat,-83,83);lon=wrap(p.lon);z=clip(zoom,1.7,14);firstReady=false;firstTileTime=0;loadPaintTimer=null;
   const stage=$('#atlas-globe-stage');
   stage.classList.remove('hidden','atlas-globe-leaving','atlas-globe-arriving');
   el.classList.remove('hidden','has-tiles','atlas-detail-returning');
@@ -934,7 +952,7 @@ function createDetailMap(){
   status.textContent='ACERCÁNDONOS AL DESTINO…';render();
   deadline=setTimeout(()=>{if(enabled&&!firstReady){exit();note.textContent='SIN CONEXIÓN A MAPA DETALLADO · USA EL GLOBO O LA BÚSQUEDA'}},13000);
  }
- function zoom(by){if(!enabled)return;if(z+by<2.5){exit();return}z=clip(z+by,2.5,14);render()}
+ function zoom(by){if(!enabled)return;if(z+by<1.7){exit();return}z=clip(z+by,1.7,14);render()}
  function pan(dx,dy){if(!enabled)return;const level=Math.floor(z),scale=Math.pow(2,z-level),p=merc(lon,lat,level),q=unmerc(p.x-dx/scale,p.y-dy/scale,level);
   lon=q.lon;lat=clip(q.lat,-83,83);render();}
  el.addEventListener('pointerdown',e=>{if(!enabled||e.target.closest('button'))return;e.preventDefault();el.setPointerCapture(e.pointerId);drag.set(e.pointerId,{x:e.clientX,y:e.clientY});el.classList.add('dragging')});
