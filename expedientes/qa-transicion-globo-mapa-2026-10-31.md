@@ -39,3 +39,25 @@ El motor incluye un globo canvas de respaldo, MapLibre GL y una superficie geogr
 - Regression test táctil para marcadores próximos, favoritos, búsqueda, modo satélite/mapa y lectura de reportajes.
 
 **Estado editorial/técnico:** corrección publicada, **QA visual móvil pendiente**. No afirmar una experiencia 10/10 hasta observarla realmente.
+
+
+## Segunda intervención · 31-10-2026 · continuidad visual real
+
+**Motivo:** el director confirmó que el primer ajuste del fundido no eliminaba la sensación de tosquedad en su iPhone.
+
+**Nueva hipótesis contrastada con el código:** no bastaba reducir la escala o duración porque el canvas del globo, las teselas de respaldo y el globo WebGL MapLibre podían relevarse sin compartir centro óptico, zoom ni momento de carga; además, el respaldo podía imponerse mientras MapLibre seguía inicializándose.
+
+**Cambios implementados:**
+- Se mantiene como motor preferente la proyección `globe` de MapLibre para que el usuario avance de globo a mapa sin cambiar de motor cartográfico en mitad del gesto. MapLibre realiza la transición adaptativa de proyección en niveles altos de zoom.
+- Antes de retirar el canvas inicial se ajusta la cámara de MapLibre usando el centro (latitud/longitud) y el tamaño visual del globo canvas, incluidos los desplazamientos verticales propios del diseño móvil.
+- El relevo al mapa WebGL espera al evento `idle` tras el ajuste de cámara; no sucede durante el gesto táctil.
+- Mientras MapLibre carga, la primera pinza no abre inmediatamente el mapa plano alternativo. Si no se dispone de teselas tras un plazo razonable, el sistema de respaldo sigue disponible.
+- La transición alternativa usa una expansión circular desde la posición real del globo, evitando que aparezca de golpe un mapa plano a pantalla completa.
+- Se añadió recuperación cuando el mapa WebGL no puede pintar la cámara nueva en un plazo de 3,5 segundos: el gesto no queda congelado.
+- Se conservaron las 18 entradas geográficas y el texto de todas las expediciones.
+
+**Commits:** `8fe00bf7433bd46672aba365fa8ed92eab97cf02` (arquitectura del relevo), `e704a02d846247a3e24dfa54081225bd0f40e0d4` (recuperación ante timeout).
+
+**Pruebas completadas:** lectura de implementación real de GitHub; validación sintáctica JavaScript del documento; verificación de integridad del arreglo de destinos; despliegue `live` confirmado por Render.
+
+**Pruebas que permanecen pendientes:** recorrido visual y táctil real en Safari/iPhone; reproducción de comportamiento con CDN lento, sin WebGL o red inestable; medición objetiva de FPS y continuidad de teselas; verificación en computador. El despliegue automático correcto no certifica por sí mismo la calidad perceptiva de una transición.
