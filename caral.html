@@ -42,6 +42,83 @@
 .related{margin-top:55px;display:flex;gap:16px;flex-wrap:wrap}.related a{display:inline-block;color:#73512e;font:600 12px/1.8 'DM Sans',sans-serif}
 @media(max-width:800px){.hero{display:block;padding:50px 18px 65px}.hero h1{font-size:clamp(38px,9vw,58px)}.hero-visual{height:auto;aspect-ratio:4/3;margin-top:32px}.hero-visual figcaption{font-size:11px}.paper{padding:55px 20px 82px}.paper article>p{font-size:15.5px;line-height:1.96}.paper .field-photo,.explain-graphic{margin:47px 0}.explain-graphic{padding:14px}.explain-graphic figcaption{font-size:11px}.gallery-grid{grid-template-columns:1fr}.gallery-grid img{height:auto;max-height:460px;object-fit:contain}.caral-gallery{padding:58px 20px 80px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* TELLUS CARAL 2.0 · EXPOSICIÓN INMERSIVA · 31-10-2026 */
+:root{--caral-sand:#d9ba86;--caral-night:#101d26}
+body{overflow-x:hidden}
+.hero.caral-hero{max-width:none;min-height:min(90svh,860px);margin:0;padding:clamp(90px,10vw,145px) clamp(24px,7vw,125px) 130px;display:flex;align-items:center;justify-content:flex-start;position:relative;isolation:isolate;text-align:left;overflow:hidden;background:#101c26;color:#f6f0e7}
+.caral-hero:before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#07121beb 0%,#0c1927dc 32%,#0c1927a8 53%,#0c192744 78%,#0c192722 100%),linear-gradient(0deg,#050a13bb,transparent 40%);pointer-events:none}
+.caral-hero .hero-copy{max-width:690px;width:100%;margin:0;position:relative;z-index:2;padding:0}
+.caral-hero .kicker{font:700 11px/1.5 'DM Sans',sans-serif;letter-spacing:.22em;color:#e9c48b}
+.caral-hero .hero-overline{font:600 10px/1.7 'DM Sans',sans-serif;color:#bfc9c6;letter-spacing:.19em;text-transform:uppercase;margin:16px 0 0}
+.caral-hero h1{font:400 clamp(70px,10vw,145px)/.99 'Libre Baskerville',Georgia,serif;max-width:850px;margin:36px 0 26px;letter-spacing:-.07em;color:#fff6e9;text-wrap:balance}
+.caral-hero h1 span{display:block;font:italic 400 clamp(28px,3.6vw,53px)/1.3 'Libre Baskerville',Georgia,serif;letter-spacing:-.04em;color:#eed5ad;margin-top:15px;max-width:650px}
+.caral-hero .hero-intro{font:400 clamp(15px,1.5vw,18px)/1.8 'Libre Baskerville',Georgia,serif;color:#edeee9;max-width:570px;text-wrap:pretty}
+.caral-hero .hero-stats{display:flex;flex-wrap:wrap;gap:16px 34px;margin-top:35px;padding-top:25px;border-top:1px solid #ffffff44}
+.caral-hero .hero-stats>div{display:flex;flex-direction:column;gap:5px}
+.caral-hero .hero-stats strong{font:400 clamp(22px,2.5vw,32px)/1.1 'Libre Baskerville',serif;color:#f1d3a1}
+.caral-hero .hero-stats span{font:700 9px/1.6 'DM Sans',sans-serif;color:#cfd3d0;letter-spacing:.13em}
+.caral-hero .read-start{font-size:11px;margin-top:32px;border-color:#d0b27d;color:#ffe1b1}
+.caral-hero .hero-visual{position:absolute;z-index:-2;inset:0;width:100%;height:100%;min-height:0;max-height:none;margin:0;box-shadow:none;overflow:hidden;aspect-ratio:auto}
+.caral-hero .hero-visual img{display:block;width:100%;height:100%;object-fit:cover;object-position:center 50%;max-height:none}
+.caral-hero .hero-visual figcaption{position:absolute;bottom:0;left:auto;right:0;width:min(56vw,610px);padding:55px 40px 20px 20px;text-align:right;color:#e3dfd6;background:linear-gradient(90deg,transparent,#0b151bb3);font:11px/1.6 'DM Sans',sans-serif}
+.caral-hero .hero-visual figcaption a{color:#f2d09d}
+.caral-hero .hero-index{position:absolute;z-index:2;right:clamp(20px,5vw,85px);top:110px;color:#f2d8aa;font:400 21px 'Libre Baskerville',serif}
+.caral-hero .hero-index span{color:#ffffffad;font-size:13px}
+.expedition-path{position:relative;background:#12232b;color:#d5d6cb;border-top:1px solid #ffffff2b;border-bottom:1px solid #ffffff20;display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:5px 23px;padding:15px 20px}
+.expedition-path span{font:700 9px 'DM Sans',sans-serif;letter-spacing:.19em;color:#d9b680;margin-right:15px}
+.expedition-path a{font:600 11px/1.6 'DM Sans',sans-serif;color:#e3e3da;text-decoration:none;padding:8px 3px}
+.expedition-path a:hover,.expedition-path a:focus-visible{color:#fff0d0;text-decoration:underline;text-underline-offset:5px}
+.paper{background:#f0e9dd;color:#283038}
+.paper article>p{max-width:76ch;font-size:16.6px;line-height:2.04;letter-spacing:-.011em;margin-bottom:33px}
+.paper article>p:first-of-type:first-letter{color:#9b7042}
+.paper .documentary-photo{margin:70px -70px 75px;max-width:calc(100% + 140px);background:transparent}
+.paper .documentary-photo img{width:100%;height:auto;max-height:720px;object-fit:contain;background:#18232a;box-shadow:0 15px 35px #1e130d23}
+.paper .documentary-photo.object-photo{max-width:690px;margin:62px auto 70px}
+.paper .documentary-photo.object-photo img{max-height:560px;object-fit:contain}
+.paper .documentary-photo.contextual-photo{max-width:calc(100% + 140px)}
+.paper .field-photo figcaption{border-left:2px solid #aa8357;padding-left:17px;color:#67625a;font-size:12px;line-height:1.8;overflow-wrap:anywhere}
+.paper .field-photo figcaption a{color:#6c4c2a}
+.explain-graphic{box-shadow:0 22px 40px #17130d24}
+.geo-embed{margin:78px -70px 80px;padding:26px;background:#152a32;color:#e8e6da;box-shadow:0 16px 40px #231e1926}
+.geo-heading{display:flex;flex-direction:column;gap:5px;margin:5px 3px 18px}.geo-heading span{color:#e3bd89;font:700 10px 'DM Sans',sans-serif;letter-spacing:.18em}.geo-heading strong{font:400 26px/1.45 'Libre Baskerville',serif}.geo-heading small{font:12px 'DM Sans',sans-serif;color:#bfcac9}
+.geo-embed iframe{display:block;width:100%;height:320px;border:0;background:#d4d4ce}
+.geo-embed figcaption{margin-top:16px;color:#cfd5d2;font:12px/1.8 'DM Sans',sans-serif}.geo-embed figcaption a{color:#f1c689}
+.history-scale{margin:65px -45px 80px;background:#12222e;color:#f3ebdf;padding:34px 38px;display:grid;gap:16px;border-top:3px solid #c59a63}
+.history-scale>div:first-child{display:flex;flex-direction:column;gap:11px;margin-bottom:12px}.history-kicker{font:700 10px 'DM Sans',sans-serif;letter-spacing:.17em;color:#d3ae7f}
+.history-scale b{font:26px/1.25 'Libre Baskerville',serif;font-weight:400}.history-scale>div:not(:first-child){display:grid;grid-template-columns:190px 1fr;gap:15px;padding-top:17px;border-top:1px solid #ffffff25}
+.history-scale strong{color:#ecd1a4;font:400 18px 'Libre Baskerville',serif}
+.history-scale div>span:not(.history-kicker){font:13px/1.7 'DM Sans',sans-serif;color:#d4d7d4}
+.history-scale small{font:11px/1.8 'DM Sans',sans-serif;color:#afbab8}.history-scale a{color:#f5d19a}
+.curatorial-quote{background:#d9c4a5;margin:70px -40px;padding:49px 45px 43px;border-left:4px solid #96704d}
+.curatorial-quote>span{font:700 10px 'DM Sans',sans-serif;letter-spacing:.16em;color:#634528}
+.curatorial-quote p{margin:15px 0;color:#453426;font:italic 400 clamp(24px,3.1vw,34px)/1.45 'Libre Baskerville',serif}
+.curatorial-quote small{font:12px/1.8 'DM Sans',sans-serif;color:#5a4d42}
+.gallery-inner>p{max-width:780px}.gallery-grid img{object-fit:contain;background:#152630}
+@media(max-width:800px){
+ .hero.caral-hero{min-height:0;padding:66px 20px 0;display:flex;flex-direction:column;align-items:stretch;background:#0f1f29}
+ .caral-hero:before{display:none}
+ .caral-hero .hero-copy{max-width:none;margin:0}
+ .caral-hero h1{font-size:clamp(63px,16vw,98px);margin:28px 0 22px}
+ .caral-hero h1 span{font-size:clamp(25px,6vw,38px);line-height:1.34;margin-top:13px}
+ .caral-hero .hero-intro{font:16px/1.75 'Libre Baskerville',serif}
+ .caral-hero .hero-overline{font-size:9px}
+ .caral-hero .hero-stats{gap:14px;margin-top:27px;padding-top:20px}
+ .caral-hero .hero-stats strong{font-size:24px}.caral-hero .hero-stats span{font-size:8px}
+ .caral-hero .hero-visual{position:relative;order:2;z-index:1;width:calc(100% + 40px);margin:35px -20px 0;height:auto;aspect-ratio:auto;overflow:visible;background:#192a31}
+ .caral-hero .hero-visual img{width:100%;height:auto;max-height:none;object-fit:contain}
+ .caral-hero .hero-visual figcaption{position:relative;width:100%;text-align:left;background:#13232a;padding:10px 20px 20px;color:#d8d8ce;font-size:10px}
+ .caral-hero .hero-index{top:29px;right:20px;font-size:14px}.caral-hero .hero-index span{font-size:10px}
+ .expedition-path{justify-content:flex-start;gap:4px 13px;padding:13px 18px}.expedition-path span{flex-basis:100%;margin-bottom:4px}.expedition-path a{font-size:10px}
+ .paper article>p{font-size:15.8px;line-height:1.98}
+ .paper .documentary-photo,.paper .documentary-photo.contextual-photo{max-width:100%;margin:46px 0}
+ .paper .documentary-photo.object-photo{margin:40px auto 50px;max-width:100%}
+ .geo-embed,.history-scale,.curatorial-quote{margin:46px 0;padding:19px}
+ .geo-heading strong{font-size:20px}.geo-embed iframe{height:255px}
+ .history-scale>div:not(:first-child){grid-template-columns:1fr;gap:5px}.history-scale b{font-size:22px}
+ .curatorial-quote p{font-size:26px}
+}
+@media(prefers-reduced-motion:reduce){.caral-hero *,.expedition-path *{transition:none!important}}
 </style></head><body><div id="reading-progress" class="reading-progress"></div><nav class="top"><a class="brand" href="/">TELLUS | EL ATLAS</a><a class="back" href="/?lugar=caral">← VOLVER AL GLOBO</a></nav><header class="hero caral-hero"><div class="hero-copy"><div class="kicker">TELLUS · EXPEDICIÓN 08 · PERÚ · LOS ANDES</div><p class="hero-overline">UN MUSEO PARA VIAJAR A TRAVÉS DEL TIEMPO</p><h1>Caral<span>La ciudad que floreció entre el desierto y el mar.</span></h1><p class="hero-intro">Hace cinco mil años, junto al río Supe, comunidades andinas levantaron pirámides, plazas hundidas y una ciudad capaz de organizar la vida entre el océano y el desierto.</p><div class="hero-stats"><div><strong>5.000</strong><span>AÑOS DE HISTORIA</span></div><div><strong>6</strong><span>GRANDES PIRÁMIDES</span></div><div><strong>2009</strong><span>PATRIMONIO UNESCO</span></div></div><a class="read-start" href="#text">COMENZAR LA EXPEDICIÓN <span aria-hidden="true">↓</span></a></div><figure class="hero-visual"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/La%20Ciudad%20Sagrada%20de%20Caral.jpg?width=1800" alt="Panorámica auténtica de la Ciudad Sagrada de Caral en el paisaje árido del valle de Supe" fetchpriority="high" decoding="async" onerror="this.closest('figure').classList.add('image-unavailable');this.remove()"><figcaption>Una panorámica de Caral, Perú. Fotografía: <a href="https://commons.wikimedia.org/wiki/File:La_Ciudad_Sagrada_de_Caral.jpg" target="_blank" rel="noopener noreferrer">Shania Dayadi Solar Arotinco · CC BY-SA 4.0 · Wikimedia Commons</a>.</figcaption></figure><div class="hero-index" aria-hidden="true">08 <span>/ 18</span></div></header><nav class="expedition-path" aria-label="Puntos de exploración en este reportaje"><span>EN ESTA EXPEDICIÓN</span><a href="#text">01 · El paisaje</a><a href="#plaza-circular">02 · La ciudad</a><a href="#shicras-caral">03 · La construcción</a><a href="#flautas-caral">04 · La música</a><a href="#galeria-caral">05 · Archivo visual</a></nav><main class="paper"><article id="text"><p>La primera impresión no es una pirámide. Es una frontera de colores. Bajo una luz intensa, las laderas del desierto peruano se extienden casi desnudas; unos metros más abajo, el valle del río Supe forma una franja verde. Sobre la terraza que domina ese contraste aparecen plataformas de piedra, escaleras y espacios circulares hundidos. No hay un palacio intacto ni una inscripción que nos presente a los antiguos habitantes. La ciudad debe leerse a partir de sus restos, como si cada muro fuera una frase escrita en un idioma de tierra y piedra.</p>
 <p>Antes de descender hacia la plaza circular, conviene mirar todo el paisaje. Caral está en la costa norcentral del Perú, en la provincia de Barranca, a unos veintitrés kilómetros del Pacífico. Esa distancia no significaba aislamiento. La cercanía relativa entre los cultivos del valle, los recursos marinos y las rutas hacia otras regiones permitió contactos e intercambios que la arqueología estudia a partir de fibras vegetales, alimentos y objetos. El desierto hizo visibles muchas construcciones; el río contribuyó a sostener la vida que las rodeaba.</p><figure class="field-photo documentary-photo contextual-photo"><a href="https://commons.wikimedia.org/wiki/File:Vista_del_valle_de_Supe_desde_Caral.jpg" target="_blank" rel="noopener noreferrer"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Vista%20del%20valle%20de%20Supe%20desde%20Caral.jpg?width=1280" alt="Panorámica del valle verde del río Supe vista desde la terraza árida de Caral" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('image-unavailable');this.remove()"></a><figcaption>Vista del valle verde del río Supe entre las laderas áridas, desde el yacimiento. Fotografía documental de 2022. Crédito: <a href="https://commons.wikimedia.org/wiki/File:Vista_del_valle_de_Supe_desde_Caral.jpg" target="_blank" rel="noopener noreferrer">QM Keen · CC BY-SA 4.0 · Wikimedia Commons</a>.</figcaption></figure><figure class="field-photo documentary-photo" id="caral-foto-8"><a href="https://commons.wikimedia.org/wiki/File:Cidade_Sagrada_de_Caral%2C_Supe_-_Peru_-_panoramio.jpg" target="_blank" rel="noopener noreferrer"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cidade%20Sagrada%20de%20Caral%2C%20Supe%20-%20Peru%20-%20panoramio.jpg?width=1400" alt="Vista de los restos de la Ciudad Sagrada de Caral-Supe" loading="lazy" decoding="async" onerror="this.closest('figure').classList.add('image-unavailable');this.remove()"></a><figcaption>Registro fotográfico de Caral en 2014, útil para comparar la extensión de los espacios excavados. Fotografía: <a href="https://commons.wikimedia.org/wiki/File:Cidade_Sagrada_de_Caral%2C_Supe_-_Peru_-_panoramio.jpg" target="_blank" rel="noopener noreferrer">Paulo JC Nogueira · CC BY-SA 3.0 · Wikimedia Commons</a>.</figcaption></figure>
 <p>La antigüedad es el primer asombro. La UNESCO sitúa el desarrollo de Caral aproximadamente entre 3000 y 1800 antes de nuestra era, durante el Arcaico Tardío andino. Cuando comenzaron algunas de sus grandes obras, todavía faltaban siglos para el apogeo de las civilizaciones americanas que suelen llenar los libros escolares. Caral pertenece a los procesos más tempranos de complejidad urbana documentados en el continente. No necesita ser proclamada la primera ciudad de todos los tiempos: su historia alcanza suficiente profundidad por sí sola.<a class="evidence-source" href="https://whc.unesco.org/es/list/1269/" target="_blank" rel="noopener noreferrer" aria-label="Abrir referencia documental: Ciudad Sagrada de Caral-Supe">Ciudad Sagrada de Caral-Supe ↗</a></p><aside class="history-scale" aria-label="Tres fechas clave en la historia de Caral"><div><span class="history-kicker">LA EDAD DEL VALLE</span><b>Una historia de cinco milenios</b></div><div><strong>c. 3000 a. C.</strong><span>Inicio aproximado del periodo de Caral que estudia UNESCO</span></div><div><strong>c. 1800 a. C.</strong><span>Fin de la horquilla general de desarrollo del sitio</span></div><div><strong>2009</strong><span>Reconocimiento como Patrimonio Mundial</span></div><small>Son hitos de contextos distintos, no fechas absolutas de construcción para cada pirámide. <a href="https://whc.unesco.org/es/list/1269/" target="_blank" rel="noopener noreferrer">UNESCO ↗</a></small></aside>
