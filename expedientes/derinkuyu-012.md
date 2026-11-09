@@ -79,3 +79,19 @@ Actualmente Derinkuyu existe como uno de los destinos originales en `index.html`
 - **Cuidado técnico:** conservar exactamente el id `derinkuyu`, no crear un segundo pin, no reescribir la página inicial en masa y no modificar las funciones del zoom ni del globo.
 
 **Auditoría:** realizada sobre el repositorio en `main` y fuentes patrimoniales públicas el 5 de noviembre de 2026. Ninguna afirmación de uso real en Safari ni de carga de todas las fotos fue certificada. No se ha realizado ninguna intervención de Derinkuyu en producción.
+
+
+## Cierre editorial · 08-11-2026
+
+La auditoría inicial del 05-11-2026 queda superada por la creación de `derinkuyu.html` y la integración del reportaje completo a la ficha original de `index.html` **en rama editorial**.
+
+- Crónica original de **2.420 palabras** en 25 párrafos narrativos, más los textos auxiliares de mapas y figuras.
+- **11 fotografías únicas**, de las que 10 documentan Derinkuyu y una, atribuida a Iain MacFadzean, muestra el paisaje volcánico de otra zona de Capadocia, debidamente rotulado como referencia regional. Portada y galería no repiten archivos entre sí.
+- Seis fotografías del interior distribuidas en el relato, una regional, tres adicionales en galería y una portada, con pie de foto, autor y licencia en cada caso.
+- Diagrama original de lectura vertical, **no a escala y sin topografía arqueológica**, con desplazamiento horizontal en móvil para conservar la legibilidad. Mapa OpenStreetMap como referencia aproximada de ubicación, no plano de excavación.
+- Siete fuentes patrimoniales y académicas al final, con llamadas de referencias junto a las afirmaciones pertinentes. Se distinguen el período bizantino y la cronología todavía debatida de la excavación inicial.
+- Verificación automatizada: el documento HTML compila su script; el JS principal de TELLUS compila; los identificadores de las referencias existen; las fotos cuentan con enlaces de procedencia; `index.html` mantiene los 19 destinos, no altera ningún destino distinto de `derinkuyu` y conserva las funciones del globo y MapLibre.
+- Revisión editorial provisional: rigor 9,4, narrativa 9,4, curaduría 9,3, integración 9,4. **La nota 9,5 y la UX móvil definitiva no están certificadas**: falta revisar visualmente la carga remota real de las 11 fotos, el renderizado en Safari iOS, el scroll horizontal del esquema y el despliegue en Render.
+- El expediente incluye las fuentes oficiales para comprobar detalles técnicos. La cifra de 20.000 personas queda tratada como estimación de capacidad, nunca como censo.
+
+**Regla de continuidad:** Derinkuyu se mantiene como destino geográfico 08 y es la expedición editorial 12. No se agrega un marcador duplicado. La actualización de la rama `main` debe hacerse mediante PR y confirmarse como `live` en Render.
