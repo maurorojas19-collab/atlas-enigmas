@@ -667,6 +667,24 @@ body.atlas-detail-active .edge-left,body.atlas-zoomed .edge-left{opacity:0;point
  #atlas-globe-stage,#atlas-detail-surface,#planet-map,.hero-copy,.map-place .atlas-marker-label{transition:none!important}
 }
 
+
+/* TELLUS 1.3: áreas reales para tocar nombres y abrir expediciones */
+.map-place{width:44px;height:44px;min-width:44px;min-height:44px;border:0;background:transparent;box-shadow:none;transform:none;position:relative;overflow:visible;touch-action:manipulation}
+.map-place:hover,.map-place.active{transform:none;background:transparent;box-shadow:none}
+.map-place::before{content:'';position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:15px;height:15px;border:2px solid #f3deb8;border-radius:50%;background:#b78549;box-shadow:0 0 0 5px #d8b57a26,0 0 17px #0009}
+.map-place.visited::before{border-color:#b6e2cf;background:#479682}
+.map-place.active::before{background:#f0d49b;border-color:#fff2d8;box-shadow:0 0 0 7px #e8c99645,0 0 18px #fff1cf}
+.map-place.nearby-cluster{width:44px;height:44px;min-width:44px;min-height:44px;border:0;background:transparent;box-shadow:none}
+.map-place.nearby-cluster::before{width:32px;height:32px;border:2px solid #fae8c9;background:#dec28e;box-shadow:0 0 0 4px #b589494d,0 6px 17px #0008}
+.map-place.nearby-cluster .map-cluster-count{position:absolute;display:grid;place-items:center;inset:4px;color:#1d2830;font:700 12px/1 'DM Sans',sans-serif}
+.map-place .atlas-marker-label{left:calc(50% + 12px);pointer-events:auto;cursor:pointer;min-height:40px;display:flex;align-items:center;max-width:180px}
+.map-place.label-left .atlas-marker-label{left:auto;right:calc(50% + 12px)}
+.map-place:focus-visible{outline:2px solid #f2d69f;outline-offset:1px;border-radius:50%}
+.map-place:focus-visible .atlas-marker-label{opacity:1;visibility:visible}
+#atlas-detail-surface .detail-pin{pointer-events:auto;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-user-select:none}
+#atlas-detail-surface .detail-pin:focus-visible{outline:2px solid #f7ddb0;outline-offset:4px}
+@media(max-width:700px){.map-place .atlas-marker-label{min-height:44px;max-width:140px;padding:10px 11px}#atlas-detail-surface .detail-pin{min-height:46px;padding:11px 14px}}
+
 </style></head><body>
 <main id="map-shell" aria-label="TELLUS, atlas interactivo del mundo">
 <div class="star-layer" aria-hidden="true"></div><div id="planet-map" aria-label="Globo cartográfico interactivo"></div>
@@ -711,9 +729,9 @@ map.on('sourcedata',e=>{
  surface.classList.add('atlas-map-visible');stage.classList.add('atlas-globe-leaving');
  setTimeout(()=>{if(window.atlasDetail?.active())return;stage.classList.add('hidden');stage.classList.remove('atlas-globe-leaving')},860);
  $('#map-mode-note').textContent='SATÉLITE · DESLIZA Y HAZ PINZA PARA ACERCAR';
-});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');const label=document.createElement('span');label.className='atlas-marker-label';label.textContent=shortPlaceName(p);label.setAttribute('aria-hidden','true');b.appendChild(label);b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.stopPropagation();const group=mapPinGroups.get(p.id);if(group?.length>1)openNearbyChooser(group);else selectPlace(p,true)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;scheduleMapPinGroups();map.on('move',()=>{scheduleMapPinGroups();document.body.classList.toggle('atlas-zoomed',map.getZoom()>=3.8)});map.on('zoomend',scheduleMapPinGroups);});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)})}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
+});map.on('load',()=>{for(let p of places){let b=document.createElement('button');b.className='map-place'+(p.visited?' visited':'');const label=document.createElement('span');label.className='atlas-marker-label';label.textContent=shortPlaceName(p);label.setAttribute('aria-hidden','true');b.appendChild(label);b.setAttribute('aria-label','Explorar '+p.name);b.title=p.name;b.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();const group=mapPinGroups.get(p.id);if(group?.length>1)openNearbyChooser(group);else selectPlace(p,map.getZoom()<3.8)});new maplibregl.Marker({element:b,anchor:'center'}).setLngLat([p.lon,p.lat]).addTo(map);markers.push({p,el:b})}mapReady=true;scheduleMapPinGroups();map.on('move',()=>{scheduleMapPinGroups();const named=map.getZoom()>=3.8;document.body.classList.toggle('atlas-zoomed',named);if(!window.atlasDetail?.active())$('#map-mode-note').textContent=named?'TOCA EL NOMBRE DE UN LUGAR PARA EXPLORAR':'SATÉLITE · DESLIZA Y ACERCA'});map.on('zoomend',scheduleMapPinGroups);});map.on('error',e=>{console.warn('Map tile or style unavailable',e?.error?.message||e)})}catch(err){console.warn(err);document.body.classList.add('offline-globe')}}
 function flyTo(p,zoom=4){if(map && $('#atlas-globe-stage').classList.contains('hidden')){if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)map.jumpTo({center:[p.lon,p.lat],zoom});else map.flyTo({center:[p.lon,p.lat],zoom,speed:1.1,curve:1.12,maxDuration:1550,essential:false})}else if(window.atlasDetail?.active())atlasDetail.enter(p,zoom);else if(window.atlasFallback)atlasFallback.focus(p)}
-function selectPlace(p,fly=true){closeNearbyChooser();selected=p;markers.forEach(m=>m.el.classList.toggle('active',m.p.id===p.id));$('#preview').classList.add('open');$('#hero-copy').style.opacity='0';$('#preview-index').textContent='EXPOSICIÓN '+p.vol+' / '+places.length+(tellusFullReports.has(p.id)?' · CRÓNICA COMPLETA':' · FICHA INTRODUCTORIA');$('#preview-title').textContent=p.name;$('#preview-lead').textContent=p.subtitle+'. '+p.lead;$('#preview-region').textContent=p.country+' · '+p.location;$('#preview-visited').textContent=p.visited?'● YA VISITASTE ESTE LUGAR':'';let im=$('#preview-image');im.src=photoUrl(p.image,1100);im.alt='Vista de '+p.name;im.onerror=()=>{im.alt='Fotografía de archivo no disponible';im.style.display='none'};im.onload=()=>im.style.display='block';if(fly)flyTo(p,4.6);scheduleMapPinGroups();if(window.atlasFallback && !$('#atlas-globe-stage').classList.contains('hidden'))atlasFallback.mark();updatePersonalControls()}
+function selectPlace(p,fly=true){closeNearbyChooser();selected=p;markers.forEach(m=>m.el.classList.toggle('active',m.p.id===p.id));$('#preview').classList.add('open');$('#hero-copy').style.opacity='0';$('#preview-index').textContent='EXPOSICIÓN '+p.vol+' / '+places.length+(tellusFullReports.has(p.id)?' · CRÓNICA COMPLETA':' · FICHA INTRODUCTORIA');$('#preview-title').textContent=p.name;$('#preview-lead').textContent=p.subtitle+'. '+p.lead;$('#preview-region').textContent=p.country+' · '+p.location;$('#preview-visited').textContent=p.visited?'● YA VISITASTE ESTE LUGAR':'';let im=$('#preview-image');im.src=photoUrl(p.image,1100);im.alt='Vista de '+p.name;im.onerror=()=>{im.alt='Fotografía de archivo no disponible';im.style.display='none'};im.onload=()=>im.style.display='block';if(fly)flyTo(p,4.6);scheduleMapPinGroups();if(window.atlasFallback && !$('#atlas-globe-stage').classList.contains('hidden'))atlasFallback.mark();if(window.atlasDetail?.active())window.atlasDetail.refresh();updatePersonalControls()}
 function resetPreview(){$('#preview').classList.remove('open');$('#hero-copy').style.opacity='1';markers.forEach(m=>m.el.classList.remove('active'))}
 
 function updateAtlasMetadata(){
@@ -1187,7 +1205,7 @@ function createDetailMap(){
  status.id='detail-status';status.className='detail-status';
  credit.id='detail-credit';credit.className='detail-credit';credit.textContent='Sentinel-2 cloudless © EOX / Copernicus';credit.setAttribute('aria-label','Créditos de la cartografía');
  el.replaceChildren(tileLayer,pinLayer,status,credit);
- const tiles=new Map(),drag=new Map();
+ const tiles=new Map(),drag=new Map(),detailButtons=new Map();
  let enabled=false,lat=12,lon=29,z=3,firstReady=false,deadline=null,loadPaintTimer=null,handoffTimer=null,firstTileTime=0,renderFrame=0;
  const clip=(v,a,b)=>Math.min(b,Math.max(a,v)),wrap=v=>((v+540)%360)-180;
  const world=zoom=>256*Math.pow(2,zoom);
@@ -1283,34 +1301,42 @@ function createDetailMap(){
   }
   const groups=clusterScreenPoints(projected,window.innerWidth<700?81:70)
     .sort((a,b)=>Number(b.some(v=>v.p.id===selected?.id))-Number(a.some(v=>v.p.id===selected?.id)));
-  const occupied=[],frag=document.createDocumentFragment();
+  const occupied=[],activeKeys=new Set();
   for(const group of groups){
    const x=group.reduce((n,v)=>n+v.x,0)/group.length,y=group.reduce((n,v)=>n+v.y,0)/group.length;
    const p=group[0].p,count=group.length,chosen=group.some(v=>v.p.id===selected?.id);
-   const b=document.createElement('button');b.type='button';
-   b.className='detail-pin'+(chosen?' chosen':'')+(count>1?' nearby-cluster':'');
    const label=count>1?count+' lugares':shortPlaceName(p);
    const approxWidth=Math.min(180,Math.max(70,label.length*7.2+31));
    const xLabel=Math.max(approxWidth/2+8,Math.min(w-approxWidth/2-8,x));
    const yLabel=Math.max(28,Math.min(h-28,y-21));
-   b.style.left=xLabel+'px';b.style.top=yLabel+'px';
-   b.textContent=label;b.title=count>1?group.map(v=>v.p.name).join(' · '):p.name;
-   b.setAttribute('aria-label',count>1?'Elegir entre '+count+' lugares cercanos':'Explorar '+p.name);
-   const area={x1:xLabel-approxWidth/2,x2:xLabel+approxWidth/2,y1:yLabel-23,y2:yLabel+23};
-   const clash=occupied.some(r=>area.x1<r.x2+5&&area.x2>r.x1-5&&area.y1<r.y2+5&&area.y2>r.y1-5);
-   if(clash&&!chosen)continue;
-   occupied.push(area);
-   b.onclick=e=>{e.stopPropagation();if(count>1)openNearbyChooser(group.map(v=>v.p));else selectPlace(p,false)};
-   frag.appendChild(b);
+   const rect={x1:xLabel-approxWidth/2,x2:xLabel+approxWidth/2,y1:yLabel-23,y2:yLabel+23};
+   const overlap=occupied.some(r=>rect.x1<r.x2+5&&rect.x2>r.x1-5&&rect.y1<r.y2+5&&rect.y2>r.y1-5);
+   if(overlap&&!chosen)continue;
+   occupied.push(rect);
+   const key=group.map(v=>v.p.id).sort().join('|');
+   activeKeys.add(key);
+   let b=detailButtons.get(key);
+   if(!b){
+    b=document.createElement('button');b.type='button';b.style.pointerEvents='auto';b.dataset.detailKey=key;
+    b.addEventListener('pointerdown',event=>event.stopPropagation());
+    detailButtons.set(key,b);pinLayer.appendChild(b);
+   }
+   b.className='detail-pin'+(chosen?' chosen':'')+(count>1?' nearby-cluster':'');
+   b.style.left=xLabel+'px';b.style.top=yLabel+'px';b.textContent=label;
+   b.title=count>1?group.map(v=>v.p.name).join(' · '):p.name;
+   b.setAttribute('aria-label',count>1?'Elegir entre '+count+' lugares cercanos':'Abrir ficha de '+p.name);
+   b.onclick=e=>{e.preventDefault();e.stopPropagation();if(count>1)openNearbyChooser(group.map(v=>v.p));else selectPlace(p,false)};
   }
-  pinLayer.replaceChildren(frag);
-  note.textContent='DETALLE GEOGRÁFICO · NIVEL '+z.toFixed(1);mode.textContent='VOLVER';
+  for(const [key,b] of detailButtons){
+   if(!activeKeys.has(key)){b.remove();detailButtons.delete(key)}
+  }
+  note.textContent='TOCA UN NOMBRE PARA ABRIR SU FICHA · ZOOM '+z.toFixed(1);mode.textContent='VOLVER';
  }
  function exit(quiet=false){
   const wasVisible=firstReady;
   enabled=false;clearTimeout(deadline);clearTimeout(loadPaintTimer);clearTimeout(handoffTimer);cancelAnimationFrame(renderFrame);renderFrame=0;drag.clear();loadPaintTimer=null;document.body.classList.remove('atlas-detail-active');
   const stage=$('#atlas-globe-stage');
-  const reset=()=>{el.classList.add('hidden');el.classList.remove('has-tiles','dragging','atlas-detail-returning');for(const t of tiles.values())t.img.remove();tiles.clear();firstReady=false;firstTileTime=0;};
+  const reset=()=>{el.classList.add('hidden');el.classList.remove('has-tiles','dragging','atlas-detail-returning');for(const t of tiles.values())t.img.remove();tiles.clear();for(const b of detailButtons.values())b.remove();detailButtons.clear();firstReady=false;firstTileTime=0;};
   if(quiet){reset();mode.textContent='MAPA';note.textContent='GIRA EL PLANETA · TOCA UN DESTINO';return}
   const previous={lat,lon};
   window.atlasFallback?.focus?.(previous);
