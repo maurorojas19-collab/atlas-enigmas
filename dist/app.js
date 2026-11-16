@@ -22,7 +22,7 @@ function roundIndices(r=roundNumber()){return Array.from({length:Math.min(ROUND_
 function roundStats(r=roundNumber()){const ids=roundIndices(r),entries=ids.map(i=>storedGame(i));const won=entries.filter(g=>g?.status==='won').length,revealed=entries.filter(g=>g?.status==='givenup').length;return {total:ids.length,won,revealed,completed:won+revealed,hints:entries.reduce((n,g)=>n+(g?.hints||0),0),tries:entries.reduce((n,g)=>n+(g?.tries||0),0)}}
 function firstInRound(r){const ids=roundIndices(r);return ids.find(i=>!finished(storedGame(i)))??ids[0]}
 function nextRoundIndex(){for(let n=1;n<=roundCount();n++){const r=(roundNumber()+n)%roundCount();if(roundStats(r).completed<roundStats(r).total)return r}return -1}
-function select(i){if(!Number.isInteger(i)||i<0||i>=bank().length)return;selected=i;cursor=game().answer.length;data.roundViews[level]=i;save();close();render()}
+function select(i){if(!Number.isInteger(i)||i<0||i>=bank().length)return;selected=i;cursor=game().answer.length;data.roundViews[level]=i;save();close();render();$('round-steps').scrollIntoView({block:'center'})}
 function startRound(r){if(Number.isInteger(r)&&r>=0&&r<roundCount())select(firstInRound(r))}
 function tiles(){const g=game(),value=finished(g)?bank()[selected][0]:g.answer;$('tiles').replaceChildren(...Array.from({length:5},(_,i)=>{const e=document.createElement('span');e.className='tile'+(finished(g)?' solved':i===Math.min(cursor,4)?' current':'');e.textContent=value[i]||'';return e}))}
 function hintText(){const g=game(),p=bank()[selected];return [p[2],p[3],'La primera letra es '+p[0][0]+'.'].slice(0,g.hints)}
