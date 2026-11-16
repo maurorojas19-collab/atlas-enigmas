@@ -1,16 +1,18 @@
 # Entre líneas · Para Paula
 
-Juego estático en español, sin instalación ni dependencias de ejecución. Abre `dist/index.html` para jugar, o sirve la carpeta `dist` con cualquier alojamiento estático HTTPS. Incluye teclado físico y virtual, pistas, rendición confirmada, archivo, resultados compartibles sin spoilers, estadísticas locales y temas claro y oscuro.
+Juego estático en español, sin instalación ni dependencias de ejecución. Abre `dist/index.html` para jugar, o sirve la carpeta `dist` con cualquier alojamiento estático HTTPS. Incluye rondas de diez acertijos, teclado físico y virtual, pistas, rendición confirmada, archivo de rondas, resultados compartibles sin spoilers, estadísticas locales y temas claro y oscuro.
 
 ## Contenido y calendario
 
 90 acertijos originales de cinco letras: 30 Suaves, 30 Intermedios y 30 Desafíos. Suave usa definiciones y mecanismos más directos; Intermedio incorpora fragmentos y combinaciones; Desafío suele requerir dos o más operaciones. La dificultad es una valoración editorial, pendiente de ajustar con experiencia real de juego.
 
-Se puede jugar sin límite de partidas diarias en **Modo libre**. La biblioteca completa está disponible desde el inicio y **Siguiente pendiente** salta los acertijos resueltos o revelados. Al agotar un nivel se informa y se puede cambiar a otro, sin reiniciar automáticamente el contenido. Es posible volver expresamente a leer una solución.
+Los 90 acertijos se distribuyen en **9 rondas de 10: tres rondas por nivel**. Cada ronda muestra diez posiciones numeradas y un contador de completados. Al terminar los diez se muestra un resumen de aciertos, soluciones reveladas, pistas e intentos. **Jugar otra ronda de 10** lleva al siguiente bloque que todavía tenga pendientes. Se pueden jugar varias rondas por día.
 
-La **Sugerencia diaria** elige una entrada de cada nivel por fecha. Primera fecha: 2 de noviembre de 2026; última: 1 de diciembre de 2026. Cambia a medianoche de America/Santiago según el reloj del dispositivo. Ambos modos comparten progreso: jugar por adelantado una futura sugerencia en modo libre la deja marcada cuando llegue su fecha. Así no se ofrece la misma partida como pendiente por segunda vez.
+**Dejar para después** salta a otro pendiente dentro de la misma ronda; no cuenta el acertijo omitido como terminado. **Tus rondas** permite cambiar de bloque y revisar soluciones anteriores. Al agotar los tres bloques de un nivel se informa, sin reiniciar ni reciclar contenido automáticamente.
 
-El archivo diario muestra fechas pasadas; la biblioteca de modo libre muestra todas las entradas sin revelar sus respuestas. Las estadísticas corresponden al nivel seleccionado e incluyen ambos modos. Se conserva el progreso previo del nivel Suave. Para extender el catálogo, añade entradas a `dist/puzzles.js` (Suave) y `dist/levels.js` (Intermedio y Desafío): respuesta sin tilde (conservando Ñ), pista, ayuda de mecanismo, orientación y explicación. Conserva el orden y la identidad de entradas ya publicadas para no alterar partidas guardadas. La fecha inicial se configura en `dist/app.js`.
+La **Ronda sugerida** prioriza un bloque según el día de America/Santiago y omite los ya completados. No implica que se añadan diez acertijos nuevos cada día. Todos los modos comparten el progreso y guardan la posición de cada nivel para poder retomar una ronda. La medianoche no interrumpe la ronda activa. Las estadísticas cuentan rondas completadas, aciertos, pendientes y aciertos con ayuda.
+
+Se conserva el historial anterior: las respuestas guardadas antes de añadir rondas se reconocen dentro de su bloque. Para extender el catálogo, añade entradas en bloques completos de diez a `dist/puzzles.js` (Suave) y `dist/levels.js` (Intermedio y Desafío): respuesta sin tilde (conservando Ñ), pista, ayuda de mecanismo, orientación y explicación. Conserva el orden y la identidad de entradas publicadas para no alterar partidas guardadas.
 
 El archivo y las respuestas son públicos en el código: es un juego casual, sin protección contra spoilers. La persistencia usa localStorage y corresponde a este navegador y origen; abrir otro archivo o dominio puede usar un historial diferente. Sin backend, cuentas ni analítica. Las fuentes se descargan de Google Fonts, con fuentes del sistema como alternativa sin conexión.
 
