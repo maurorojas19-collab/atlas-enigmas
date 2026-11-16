@@ -1,40 +1,21 @@
-# TELLUS | EL ATLAS
+# Entre líneas · Para Paula
 
-Museo digital de exploración histórica, arqueología, ciencia y lugares extraordinarios. **TELLUS** es el nombre público del proyecto; **EL ATLAS**, su experiencia de exploración. Lema: **La Tierra guarda historias.**
+Juego estático en español, sin instalación ni dependencias de ejecución. Abre `dist/index.html` para jugar, o sirve la carpeta `dist` con cualquier alojamiento estático HTTPS. Incluye teclado físico y virtual, pistas, rendición confirmada, archivo, resultados compartibles sin spoilers, estadísticas locales y temas claro y oscuro.
 
-## Sitio publicado
-https://tellus-atlas.onrender.com
+## Contenido y calendario
 
-- **Dirección oficial:** `https://tellus-atlas.onrender.com` (servicio de Render `tellus-atlas`).
-- **Servicio anterior:** `https://tellus-uolq.onrender.com` (provisional, aún conservado).
-- **Respaldo:** https://atlas-enigmas.onrender.com (servicio conservado como `atlas-enigmas-respaldo`).
+90 acertijos originales de cinco letras: 30 Suaves, 30 Intermedios y 30 Desafíos. Suave usa definiciones y mecanismos más directos; Intermedio incorpora fragmentos y combinaciones; Desafío suele requerir dos o más operaciones. La dificultad es una valoración editorial, pendiente de ajustar con experiencia real de juego.
 
-- **Repositorio:** maurorojas19-collab/atlas-enigmas
-- **Rama de publicación:** main
-- **Hosting:** Render Static Site, publicación automática desde main
-- **Versión inicial:** 0.2, publicada el 28 de octubre de 2026
+Se puede jugar sin límite de partidas diarias en **Modo libre**. La biblioteca completa está disponible desde el inicio y **Siguiente pendiente** salta los acertijos resueltos o revelados. Al agotar un nivel se informa y se puede cambiar a otro, sin reiniciar automáticamente el contenido. Es posible volver expresamente a leer una solución.
 
-## Funciones
-- Globo interactivo con marcadores y vista de respaldo.
-- Sombreado de día/noche geográfico calculado mediante la posición aproximada del Sol.
-- Reloj de Santiago y hora local de los destinos.
-- Quince destinos iniciales, buscador y filtros.
-- Reportajes históricos de largo formato con fuentes contrastadas y archivo fotográfico editorial: Seti I, Guiza y Karnak.
-- Favoritos, visitados y apartado personal “Mi huella en este lugar”.
-- Fotos personales en IndexedDB, notas y fechas en localStorage: **solo en este navegador**, no se sincronizan con cuentas ni se publican al servidor.
-- Personalización local del rótulo en la biblioteca clásica; la marca pública oficial es TELLUS.
+La **Sugerencia diaria** elige una entrada de cada nivel por fecha. Primera fecha: 2 de noviembre de 2026; última: 1 de diciembre de 2026. Cambia a medianoche de America/Santiago según el reloj del dispositivo. Ambos modos comparten progreso: jugar por adelantado una futura sugerencia en modo libre la deja marcada cuando llegue su fecha. Así no se ofrece la misma partida como pendiente por segunda vez.
 
-## Privacidad
-Las fotografías seleccionadas para los reportajes editoriales (Seti I, Guiza y Karnak) se publican como parte del sitio y son accesibles públicamente. Esto es distinto de los recuerdos y fotografías que un visitante añade mediante el formulario «Mi huella en este lugar»: esos permanecen en su navegador. No hay cuentas ni copia de seguridad en la nube. Limpiar los datos del navegador o cambiar de dispositivo puede borrar los recuerdos. Para utilizarla como archivo permanente hay que incorporar autenticación, almacenamiento privado y exportación de respaldo antes de confiarle fotografías importantes.
+El archivo diario muestra fechas pasadas; la biblioteca de modo libre muestra todas las entradas sin revelar sus respuestas. Las estadísticas corresponden al nivel seleccionado e incluyen ambos modos. Se conserva el progreso previo del nivel Suave. Para extender el catálogo, añade entradas a `dist/puzzles.js` (Suave) y `dist/levels.js` (Intermedio y Desafío): respuesta sin tilde (conservando Ñ), pista, ayuda de mecanismo, orientación y explicación. Conserva el orden y la identidad de entradas ya publicadas para no alterar partidas guardadas. La fecha inicial se configura en `dist/app.js`.
 
-## Estructura
-La versión 0.2 está desplegada como **index.html autocontenido** para simplificar la publicación inicial. Contiene el CSS, datos editoriales, lógica de interfaz e imagen ilustrada de respaldo. MapLibre y los mapas/fotos externos requieren Internet. Antes de escalar a cientos de destinos conviene dividir en módulos de UI, datos y estilos.
+El archivo y las respuestas son públicos en el código: es un juego casual, sin protección contra spoilers. La persistencia usa localStorage y corresponde a este navegador y origen; abrir otro archivo o dominio puede usar un historial diferente. Sin backend, cuentas ni analítica. Las fuentes se descargan de Google Fonts, con fuentes del sistema como alternativa sin conexión.
 
-## Próximas versiones
-- Añadir progresivamente lugares y artículos con rigor histórico, fotografías con licencia comprobada y referencias trazables.
-- Revisar cada artículo antes de presentarlo como investigación exhaustiva.
-- Implementar exportación de recuerdos y, opcionalmente, una cuenta privada.
-- Mantener los enlaces de `tellus-atlas.onrender.com` y conservar los servicios anteriores como respaldo hasta decidir si se desea otra URL gratuita de Render.
-- Revisar rendimiento de globo y vista móvil en dispositivos reales.
+## Diseño
 
-La experiencia inmersiva está en `index.html` y `inmersion.html`. Los reportajes independientes están en `seti-i.html`, `giza.html` y `karnak.html`. Las nueve fotografías originales de Karnak están optimizadas en `assets/karnak/` y se muestran también en el archivo visual de la ficha del globo. Los cambios en `main` se despliegan automáticamente según la configuración actual documentada.
+Identidad propia: Entre líneas, negro cálido, coral y tipografía editorial. Dedicatoria: «Para Paula, que siempre encuentra algo más». Inspiración de estructura y paleta: captura aportada y https://cripticando.com.ar/. No se reutilizaron su marca, textos de interfaz extensos ni acertijos.
+
+La configuración de Sites se conserva en `.openai/hosting.json`; su presencia por sí sola no confirma publicación. Consulta el mensaje de entrega para el estado de publicación comprobado.
